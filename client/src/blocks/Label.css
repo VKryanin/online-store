@@ -1,0 +1,17 @@
+.label {
+    max-width: 450px;
+    width: 100%;
+    margin: 13px auto 0;
+}
+
+.label:first-child {
+    margin-top: 0;
+}
+
+.label__input {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    padding: 5px;
+}

@@ -1,0 +1,16 @@
+.sideBar__list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sideBar__item {
+    border: 1px solid #C4C4C4;
+    cursor: pointer;
+    transition: all .3s linear;
+    padding: 5px;
+}
+
+.selected {
+    background-color: #0d6efd;
+}

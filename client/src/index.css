@@ -1,0 +1,21 @@
+@import url(./vendor/fonts.css);
+
+@import url(./blocks/NavBar.css);
+@import url(./blocks/Login.css);
+@import url(./blocks/Auth.css);
+@import url(./blocks/Label.css);
+@import url(./blocks/Shop.css);
+@import url(./blocks/TypeBar.css);
+@import url(./blocks/DeviceList.css);
+@import url(./blocks/Admin.css);
+@import url(./blocks/CreateItem.css);
+
+.root {
+    background-color: #fff;
+    font-family: 'Inter', Arial, sans-serif;
+    color: #000;
+    min-height: 100vh;
+    min-width: 320px;
+    width: 100%;
+    margin: 0;
+}

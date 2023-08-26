@@ -1,0 +1,41 @@
+.header {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 60px;
+    background-color: #C4C4C4;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__link {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #fff;
+    text-decoration: none;
+    transition: all .3s linear;
+}
+
+.header__link:hover {
+    scale: 1.1;
+    opacity: .8;
+}
+
+.header__button {
+    border: 1px #fff solid;
+    background-color: transparent;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 14px;
+    transition: all .3s linear;
+}
+
+.header__button:last-of-type {
+    margin-right: 0;
+}
+
+.header__button:hover {
+    scale: 1.1;
+}
