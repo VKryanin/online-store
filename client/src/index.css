@@ -9,6 +9,7 @@
 @import url(./blocks/DeviceList.css);
 @import url(./blocks/Admin.css);
 @import url(./blocks/CreateItem.css);
+@import url(./blocks/LabelItem.css);
 
 .root {
     background-color: #fff;

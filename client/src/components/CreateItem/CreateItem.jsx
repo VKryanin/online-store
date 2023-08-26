@@ -1,19 +1,20 @@
 import React from "react";
+import { LabelItem } from "../LabelItem/LabelItem";
 
 export const CreateItem = ({ formHidden, setFormHidden, formFor }) => {
-    if (formFor === 'type') {
-        return <div className="createItem">
-            {formFor}
-        </div>
-    } else if (formFor === 'brand') {
-        return <div className="createItem">
-            {formFor}
-        </div>
-    } else {
-        return <div className="createItem">
-            {formFor}
-        </div>
-    }
+
+
+    return <div className="createItem">
+        <form name={formFor}>
+            {formFor === 'type'
+                ? (<LabelItem title={"type"} name={formFor} />)
+                : (formFor === 'brand'
+                    ? <LabelItem />
+                    : <LabelItem />
+                )
+            }
+        </form>
+    </div>
 
 
 }
