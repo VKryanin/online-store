@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Shop } from "./components/Shop/Shop";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import { Basket } from "./components/Basket/Basket";
@@ -66,7 +66,7 @@ export function App() {
           />
           <Route
             path='/admin'
-            element={<Admin />}
+            element={<Admin types={type} brands={brands} />}
           />
           <Route
             path='/*'

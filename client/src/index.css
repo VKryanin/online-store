@@ -10,6 +10,7 @@
 @import url(./blocks/Admin.css);
 @import url(./blocks/CreateItem.css);
 @import url(./blocks/LabelItem.css);
+@import url(./blocks/SelectedItem.css);
 
 .root {
     background-color: #fff;

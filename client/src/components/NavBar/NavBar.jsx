@@ -20,10 +20,10 @@ export const NavBar = (props) => {
                     }}>Exit</button>
                 </nav>
                 : <nav className="header__nav">
-                    <button className="header__button" onClick={() => {
-                        setLoggedIn(true)
-                    }}>Login</button>
-                    <button className="header__button">Registration</button>
+                    <NavLink to={'/login'} className="header__button" onClick={() => {
+                        // setLoggedIn(true)
+                    }}>Login</NavLink>
+                    <NavLink to={'/registration'} className="header__button">Registration</NavLink>
                 </nav>
             }
         </header>
