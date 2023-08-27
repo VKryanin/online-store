@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const Label = ({ title, name, pattern, minLength, maxLength, value, onChange }) => {
+    
     return (
         <label className='label'>
             <span className='label__input-name'></span>
