@@ -17,6 +17,9 @@ const User = sequelize.define('user', {
     role: {
         type: DataTypes.STRING,
         defaultValue: "USER"
+    },
+    name: {
+        type: DataTypes.STRING,
     }
 })
 
@@ -140,11 +143,11 @@ Rating.belongsTo(Device)
 Device.hasMany(BasketDevice)
 BasketDevice.belongsTo(Device)
 
-Device.hasMany(DeviceInfo, {as: 'info'})
+Device.hasMany(DeviceInfo, { as: 'info' })
 DeviceInfo.belongsTo(Device)
 
-Type.belongsToMany(Brand, {through: TypeBrand})
-Brand.belongsToMany(Type, {through: TypeBrand})
+Type.belongsToMany(Brand, { through: TypeBrand })
+Brand.belongsToMany(Type, { through: TypeBrand })
 
 
 module.exports = {

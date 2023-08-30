@@ -13,7 +13,7 @@ const generateJwt = (id, email, role) => {
 
 class UserController {
     async registration(req, res, next) {
-        const { email, password, role } = req.body
+        const { email, password, role, name } = req.body
         if (!email || !password) {
             return next(ApiError.badRequest('Incorrect email or password'))
         }
@@ -22,9 +22,9 @@ class UserController {
             return next(ApiError.badRequest('Email already exists'))
         }
         const hashPassword = await bcrypt.hash(password, 5);
-        const user = await User.create({ email, role, password: hashPassword });
+        const user = await User.create({ email, role, name ,password: hashPassword });
         const basket = await Basket.create({ userId: user.id });
-        const token = generateJwt(user.id, user.email, role)
+        const token = generateJwt(user.id, user.email, user.name, role)
         return res.json({ token })
     }
 
@@ -44,7 +44,22 @@ class UserController {
 
     async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.email, req.user.role)
-        return res.json({token})
+        return res.json({ token })
+    }
+
+    async getUser(req, res, next) {
+        try {
+            const token = req.headers.authorization.split(' ')[1]
+            const { id } = jwt.decode(token, process.env.SECRET_KEY)
+            const user = await User.findOne({ where: { id: id } });
+            console.log(user);
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+            return res.json(user);
+        } catch (error) {
+            next(error);
+        }
     }
 }
 

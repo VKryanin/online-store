@@ -1,5 +1,5 @@
 import React from "react";
-import { NavBar } from "../NavBar/NavBar";
+import { Header } from "../Header/Header";
 import { useParams } from 'react-router-dom';
 
 export const DevicePage = ({ loggedIn, device }) => {
@@ -8,7 +8,7 @@ export const DevicePage = ({ loggedIn, device }) => {
         item.id === +id))
     return (
         <>
-            <NavBar loggedIn={loggedIn} />
+            <Header loggedIn={loggedIn} />
             {deviceItem && (
                 <div>
                     <h2>{deviceItem.device}</h2>

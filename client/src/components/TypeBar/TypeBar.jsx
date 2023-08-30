@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export const TypeBar = ({ type }) => {
+export const TypeBar = ({ deviceTypes }) => {
     const [selectedType, setSelectedType] = useState();
+
+    useEffect(() => {
+        setSelectedType(null);
+    }, [deviceTypes]);
+
     const handleTypeClick = (type) => {
         setSelectedType(type);
     }
+
     return (
         <ul className="sideBar__list">
             <h2 className="sideBar__title">Choose device type</h2>
-            {type.map((item, index) =>
-                <li
-                    onClick={() => handleTypeClick(item.type)}
-                    active={selectedType === item.type ? "true" : "false"}
-                    key={index}
-                    className={selectedType === item.type
-                        ? "sideBar__item selected"
-                        : "sideBar__item"}>
-                    {item.type}
-                </li>
+            {deviceTypes ? (
+                deviceTypes.map((type) => (
+                    <li
+                        className={selectedType === type.name ? "sideBar__item selected" : "sideBar__item"}
+                        active={selectedType === type.name ? "true" : "false"}
+                        onClick={() => handleTypeClick(type.name)}
+                        key={type.id}
+                    >
+                        {type.name}
+                    </li>
+                ))
+            ) : (
+                <p>Loading</p>
             )}
         </ul>
     )

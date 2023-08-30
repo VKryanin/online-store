@@ -2,8 +2,10 @@ import React from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { Auth } from "../Auth/Auth";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-export const Registration = () => {
+
+export const Registration = ({ setCurrentUser, auth }) => {
     const navigate = useNavigate();
 
     return (
@@ -14,7 +16,8 @@ export const Registration = () => {
             </header>
             <section className="auth__section">
                 <h1 className="auth__title">Registration</h1>
-                < Auth isRegForm={true} />
+                < Auth isRegForm={true}
+                    auth={auth} />
             </section>
         </div>
     )

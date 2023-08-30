@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavBar } from "../NavBar/NavBar";
+import { Header } from "../Header/Header";
 import { CreateItem } from "../CreateItem/CreateItem";
 
 export const Admin = ({ types, brands }) => {
@@ -14,7 +14,7 @@ export const Admin = ({ types, brands }) => {
 
     return (
         <>
-            <NavBar />
+            <Header />
             <section className="admin">
                 <button className="admin__button" onClick={() => { handleClick(); ChooseForm('type') }}>add type</button>
                 <button className="admin__button" onClick={() => { handleClick(); ChooseForm('brand') }}>add brand</button>

@@ -3,8 +3,8 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 
 import { NavLink, useNavigate } from "react-router-dom";
 
-export const NavBar = (props) => {
-    const { setLoggedIn, loggedIn } = props;
+export const Header = ({ logout }) => {
+    const currentUser = useContext(CurrentUserContext)
     const navigate = useNavigate();
     const OpenAdminPanel = () => {
         navigate('/admin')
@@ -12,17 +12,19 @@ export const NavBar = (props) => {
     return (
         <header className="header">
             <NavLink className='header__link' to={'/'}>SoqaShop</NavLink>
-            {loggedIn
+            {currentUser.isLoggedIn
                 ? <nav className="header__nav">
-                    <button className="header__button" onClick={() => { OpenAdminPanel() }}>Admin</button>
+                    {currentUser.role === 'ADMIN'
+                        ? <button className="header__button" onClick={() => { OpenAdminPanel() }}>Admin</button>
+                        : <></>
+                    }
+                    <NavLink to={'/profile'} className="header__button">Profile</NavLink>
                     <button className="header__button" onClick={() => {
-                        setLoggedIn(false)
+                        logout()
                     }}>Exit</button>
                 </nav>
                 : <nav className="header__nav">
-                    <NavLink to={'/login'} className="header__button" onClick={() => {
-                        // setLoggedIn(true)
-                    }}>Login</NavLink>
+                    <NavLink to={'/login'} className="header__button">Login</NavLink>
                     <NavLink to={'/registration'} className="header__button">Registration</NavLink>
                 </nav>
             }

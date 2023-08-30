@@ -3,7 +3,7 @@
     /* margin: 0; */
     list-style: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     flex-wrap: wrap;
     box-sizing: border-box;
     margin: 0 auto;

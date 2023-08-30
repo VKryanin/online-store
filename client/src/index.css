@@ -1,6 +1,6 @@
 @import url(./vendor/fonts.css);
 
-@import url(./blocks/NavBar.css);
+@import url(./blocks/Header.css);
 @import url(./blocks/Login.css);
 @import url(./blocks/Auth.css);
 @import url(./blocks/Label.css);
