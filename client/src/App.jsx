@@ -9,7 +9,8 @@ import { DevicePage } from './components/DevicePage/DevicePage';
 import { Admin } from './components/Admin/Admin';
 import { NotFound } from "./components/NotFound/NotFound";
 import { CurrentUserContext } from "./context/CurrentUserContext";
-import { DeviceContext } from "./context/DeviceContext";
+import { DeviceTypeContext, DeviceBrandContext, DeviceContext } from "./context/DeviceContext";
+
 import { userApi } from "./Api/userApi";
 import { deviceApi } from './Api/deviceApi'
 import { LOCAL_STORAGE_TOKEN_KEY } from "./utils/constants";
@@ -21,35 +22,27 @@ export function App() {
   const [currentUser, setCurrentUser] = useState({
     isLoggedIn: localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) ? true : false,
   });
-  const [devices, setDevices] = useState()
+  const [deviceTypes, setDeviceType] = useState()
+  const [deviceBrand, setDeviceBrand] = useState();
+  const [devices, setDevice] = useState();
   const isLogin = location.pathname === '/login';
 
   const deviceType = () => {
     deviceApi.getType()
-      .then(setDevices)
+      .then(setDeviceType)
+      .catch(e => console.error(e))
+  }
+
+  const deviceBrands = () => {
+    deviceApi.getBrand()
+      .then(setDeviceBrand)
       .catch(e => console.error(e))
   }
 
   useEffect(() => {
     deviceType()
+    deviceBrands()
   }, [])
-
-  const brands = [
-    { brand: 'LG' },
-    { brand: 'Apple' },
-    { brand: 'Samsung' },
-    { brand: 'Nokia' },
-  ];
-  const device = [
-    { id: 0, device: 'IPhone 12 Pro' },
-    { id: 1, device: 'Galaxy S10' },
-    { id: 2, device: 'IPhone 12 Pro Max' },
-    { id: 3, device: 'Galaxy S21' },
-    { id: 4, device: 'Nokia 3310' },
-    { id: 5, device: 'IPhone 13 Pro' },
-    { id: 6, device: 'Galaxy S15' },
-    { id: 7, device: 'Galaxy S10 Pro' },
-  ]
 
   useEffect(() => {
     if (currentUser.isLoggedIn) {
@@ -108,38 +101,42 @@ export function App() {
   return (
     <>
       <CurrentUserContext.Provider value={currentUser} >
-        <DeviceContext.Provider value={devices}>
-          <Routes>
-            <Route
-              path='/'
-              element={<Shop setCurrentUser={setCurrentUser} device={device} brands={brands} logout={logout} />}
-            />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/basket" element={<Basket />} />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
-            <Route
-              path='/login'
-              element={<Login auth={formAuth} />}
-            />
-            <Route
-              path='/registration'
-              element={<Registration auth={formAuth} />}
-            />
-            <Route
+        <DeviceTypeContext.Provider value={deviceTypes}>
+          <DeviceBrandContext.Provider value={deviceBrand}>
+            <DeviceContext.Provider value={devices}>
+              <Routes>
+                <Route
+                  path='/'
+                  element={<Shop setCurrentUser={setCurrentUser} logout={logout} />}
+                />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/basket" element={<Basket />} />
+                  <Route path="/profile" element={<Profile />} />
+                </Route>
+                <Route
+                  path='/login'
+                  element={<Login auth={formAuth} />}
+                />
+                <Route
+                  path='/registration'
+                  element={<Registration auth={formAuth} />}
+                />
+                {/* <Route
               path='/device/:id'
-              element={<DevicePage setCurrentUser={setCurrentUser} device={device} />}
-            />
-            {/* <Route
-              path='/admin'
-              element={<Admin types={type} brands={brands} />}
+              element={<DevicePage setCurrentUser={setCurrentUser}  />}
             /> */}
-            <Route
-              path='/*'
-              element={<NotFound />}
-            />
-          </Routes>
-        </DeviceContext.Provider>
+                {/* <Route
+              path='/admin'
+              element={<Admin brands={brands} />}
+            /> */}
+                <Route
+                  path='/*'
+                  element={<NotFound />}
+                />
+              </Routes>
+            </DeviceContext.Provider>
+          </DeviceBrandContext.Provider>
+        </DeviceTypeContext.Provider>
       </CurrentUserContext.Provider>
     </>
 
