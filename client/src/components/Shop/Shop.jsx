@@ -21,7 +21,7 @@ export const Shop = ({ loggedIn, type, device, brands, logout }) => {
                     < BrandBar deviceBrands={deviceBrands} />
                 </aside>
                 <main className="shop__content">
-                    {/* <DeviceList device={device} /> */}
+                    <DeviceList devices={devices} />
                 </main>
             </section>
         </>

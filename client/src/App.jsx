@@ -40,7 +40,7 @@ export function App() {
   }
 
   const device = () => {
-    deviceApi.getDevice
+    deviceApi.getDevice()
       .then(setDevice)
       .catch(e => console.error(e))
   }
@@ -48,6 +48,7 @@ export function App() {
   useEffect(() => {
     deviceType()
     deviceBrands()
+    device()
   }, [])
 
   useEffect(() => {
@@ -104,6 +105,31 @@ export function App() {
     navigate('/')
   }
 
+  const handleAddType = async (name) => {
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)
+    const newType = await deviceApi.addType(name, token)
+    try {
+      setDeviceType(prev => ({
+        ...prev,
+        name: newType.name
+      }))
+    } catch (error) {
+      console.log(error.response.data.message)
+    }
+  }
+
+  const handleAddBrand = async ({ name }) => {
+    const newBrand = await deviceApi.addBrand({ name })
+    try {
+      setDeviceBrand(prev => ({
+        ...prev,
+        name: newBrand.name
+      }))
+    } catch (error) {
+      console.log(error.response.data.message)
+    }
+  }
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser} >
@@ -128,13 +154,13 @@ export function App() {
                   element={<Registration auth={formAuth} />}
                 />
                 <Route
-              path='/device/:id'
-              element={<DevicePage setCurrentUser={setCurrentUser}  />}
-            />
+                  path='/device/:id'
+                  element={<DevicePage setCurrentUser={setCurrentUser} />}
+                />
                 <Route
-              path='/admin'
-              element={<Admin />}
-            />
+                  path='/admin'
+                  element={<Admin handleAddType={handleAddType} handleAddBrand={handleAddBrand} />}
+                />
                 <Route
                   path='/*'
                   element={<NotFound />}

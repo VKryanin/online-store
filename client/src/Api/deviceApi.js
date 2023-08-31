@@ -12,13 +12,14 @@ class DeviceApi {
         })
     }
 
-    addBrand({ name }) {
+    addBrand(name, token) {
         return fetch(`${this._link}/brand`, {
             headers: {
                 "Content-Type": "application/json",
+                authorization: `Bearer ${token}`
             },
             method: 'POST',
-            body: JSON.stringify({ name })
+            body: JSON.stringify(name)
         }).then((res) => this._checkResponse(res))
     }
 
@@ -30,10 +31,11 @@ class DeviceApi {
         }).then((res) => this._checkResponse(res))
     }
 
-    addType({ name }) {
+    addType(name, token) {
         return fetch(`${this._link}/type`, {
             headers: {
                 "Content-Type": "application/json",
+                authorization: `Bearer ${token}`
             },
             method: 'POST',
             body: JSON.stringify({ name })
