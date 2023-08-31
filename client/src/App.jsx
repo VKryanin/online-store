@@ -39,6 +39,12 @@ export function App() {
       .catch(e => console.error(e))
   }
 
+  const device = () => {
+    deviceApi.getDevice
+      .then(setDevice)
+      .catch(e => console.error(e))
+  }
+
   useEffect(() => {
     deviceType()
     deviceBrands()
@@ -121,14 +127,14 @@ export function App() {
                   path='/registration'
                   element={<Registration auth={formAuth} />}
                 />
-                {/* <Route
+                <Route
               path='/device/:id'
               element={<DevicePage setCurrentUser={setCurrentUser}  />}
-            /> */}
-                {/* <Route
+            />
+                <Route
               path='/admin'
-              element={<Admin brands={brands} />}
-            /> */}
+              element={<Admin />}
+            />
                 <Route
                   path='/*'
                   element={<NotFound />}

@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     list-style: none;
+    max-width: 350px;
 }
 
 .sideBar__item {
@@ -9,6 +10,8 @@
     cursor: pointer;
     transition: all .3s linear;
     padding: 5px;
+    border-radius: 5px;
+    margin-top: 5px;
 }
 
 .selected {

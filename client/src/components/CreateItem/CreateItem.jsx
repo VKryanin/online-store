@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { LabelItem } from "../LabelItem/LabelItem";
 import { SelectedItem } from "../SelectedItem/SelectedItem";
-import { DeviceTypeContext } from "../../context/DeviceContext";
+import { DeviceTypeContext, DeviceBrandContext } from "../../context/DeviceContext";
 
 export const CreateItem = ({ formHidden, setFormHidden, formFor, brands }) => {
     const [info, setInfo] = useState([]);
     const deviceTypes = useContext(DeviceTypeContext);
+    const deviceBrand = useContext(DeviceBrandContext);
     const addInfo = () => {
         setInfo([...info, { title: '', description: '', number: Date.now() }])
     }
@@ -44,8 +45,8 @@ export const CreateItem = ({ formHidden, setFormHidden, formFor, brands }) => {
                 : (formFor === 'brand'
                     ? <LabelItem title={"brand"} name={formFor} type={'name'} />
                     : <>
-                        <SelectedItem title={"brand"} brands={brands} />
-                        <SelectedItem title={"type"} deviceTypes={deviceTypes}/>
+                        <SelectedItem title={"brand"} deviceBrand={deviceBrand} />
+                        <SelectedItem title={"type"} deviceTypes={deviceTypes} />
                         <LabelItem title={"name"} name={formFor} type={'name'} />
                         <LabelItem title={"coast"} name={`${formFor} coast`} type={'number'} />
                         <LabelItem title={"image"} name={`${formFor} image`} type={'file'} />

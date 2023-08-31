@@ -22,7 +22,7 @@ export const Admin = ({ brands }) => {
                 <button className="admin__button" onClick={() => { handleClick(); ChooseForm('brand') }}>add brand</button>
                 <button className="admin__button" onClick={() => { handleClick(); ChooseForm('device') }}>add device</button>
             </section>
-            {!formHidden && <CreateItem formHidden={formHidden} setFormHidden={setFormHidden} formFor={formFor} brands={brands} />}
+            {!formHidden && <CreateItem formHidden={formHidden} setFormHidden={setFormHidden} formFor={formFor} />}
 
         </>
     )

@@ -8,10 +8,10 @@
 }
 
 .shop__filter {
-    max-width: 520px;
-    width: 520px;
+    max-width: 400px;
     border: 1px solid #C4C4C4;
     border-radius: 5px;
+    padding: 15px;
 }
 
 .shop__content {
