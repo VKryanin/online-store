@@ -4,7 +4,6 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 export const ProtectedRoute = () => {
     const currentUser = useContext(CurrentUserContext)
-    console.log(currentUser.isLoggedIn);
     return currentUser.isLoggedIn ? (
         <Outlet />
     )

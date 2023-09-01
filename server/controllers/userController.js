@@ -52,7 +52,6 @@ class UserController {
             const token = req.headers.authorization.split(' ')[1]
             const { id } = jwt.decode(token, process.env.SECRET_KEY)
             const user = await User.findOne({ where: { id: id } });
-            console.log(user);
             if (!user) {
                 return res.status(404).json({ error: 'User not found' });
             }

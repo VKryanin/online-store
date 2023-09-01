@@ -16,7 +16,8 @@ export const DeviceList = ({ devices }) => {
                         key={device.id}
                         className="deviceList__item"
                         onClick={() => { OpenDevicePage(device.id) }}>
-                        {device.name}
+                        <h4>{device.name}</h4>
+                        <img className="deviceList__image" src={`${process.env.REACT_APP_API_URL}/${device.img}`} alt="" />
                     </li>
                 )}
             </ul>

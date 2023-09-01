@@ -19,7 +19,7 @@ class DeviceApi {
                 authorization: `Bearer ${token}`
             },
             method: 'POST',
-            body: JSON.stringify(name)
+            body: JSON.stringify({ name })
         }).then((res) => this._checkResponse(res))
     }
 
@@ -60,7 +60,12 @@ class DeviceApi {
         }).then((res) => this._checkResponse(res))
     }
 
-    getDevice() {
+    getDevice(id) {
+        return fetch(`${this._link}/device/${id}`, {
+        })
+    }
+
+    getDevices() {
         return fetch(`${this._link}/device`, {
             headers: {
                 "Content-Type": "application/json",

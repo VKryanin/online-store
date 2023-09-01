@@ -19,13 +19,14 @@ import { Profile } from "./components/Profile/Profile";
 export function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [currentUser, setCurrentUser] = useState({
-    isLoggedIn: localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) ? true : false,
-  });
   const [deviceTypes, setDeviceType] = useState()
   const [deviceBrand, setDeviceBrand] = useState();
   const [devices, setDevice] = useState();
   const isLogin = location.pathname === '/login';
+  const [currentUser, setCurrentUser] = useState({
+    isLoggedIn: localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) ? true : false,
+  });
+
 
   const deviceType = () => {
     deviceApi.getType()
@@ -40,7 +41,7 @@ export function App() {
   }
 
   const device = () => {
-    deviceApi.getDevice()
+    deviceApi.getDevices()
       .then(setDevice)
       .catch(e => console.error(e))
   }
@@ -105,7 +106,7 @@ export function App() {
     navigate('/')
   }
 
-  const handleAddType = async (name) => {
+  const handleAddType = async ({ name }) => {
     const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)
     const newType = await deviceApi.addType(name, token)
     try {
@@ -119,7 +120,8 @@ export function App() {
   }
 
   const handleAddBrand = async ({ name }) => {
-    const newBrand = await deviceApi.addBrand({ name })
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)
+    const newBrand = await deviceApi.addBrand(name, token)
     try {
       setDeviceBrand(prev => ({
         ...prev,
@@ -144,6 +146,10 @@ export function App() {
                 <Route element={<ProtectedRoute />}>
                   <Route path="/basket" element={<Basket />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route
+                    path='/admin'
+                    element={<Admin handleAddType={handleAddType} handleAddBrand={handleAddBrand} />}
+                  />
                 </Route>
                 <Route
                   path='/login'
@@ -157,10 +163,7 @@ export function App() {
                   path='/device/:id'
                   element={<DevicePage setCurrentUser={setCurrentUser} />}
                 />
-                <Route
-                  path='/admin'
-                  element={<Admin handleAddType={handleAddType} handleAddBrand={handleAddBrand} />}
-                />
+
                 <Route
                   path='/*'
                   element={<NotFound />}
