@@ -27,7 +27,6 @@ export function App() {
     isLoggedIn: localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) ? true : false,
   });
 
-
   const deviceType = () => {
     deviceApi.getType()
       .then(setDeviceType)
@@ -132,33 +131,32 @@ export function App() {
     }
   }
 
-  // const handleAddDevice = async (data) => {
-  //   console.log(data);
-  //   const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
-  //   const newDevice = await deviceApi.addDevice(data, token)
-  //   await deviceApi.addDevice(data, token)
-  //   try {
-  //     setDevice(prev => ({
-  //       ...prev,
-  //       name: newDevice.name
-  //     }))
-  //   } catch (error) {
-  //     console.log(error.response.data.message);
-  //   }
-  // }
-
   const handleAddDevice = async (data) => {
     const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
-    const formData = new FormData();
+    try {
+      let newDevice = await deviceApi.addDevice(data, token);
+      setDevice(prev => ({
+        ...prev,
+        name: newDevice.name,
+        price: newDevice.newPrice,
+        img: newDevice.image,
+        brandId: newDevice.brandId,
+        typeId: newDevice.typeId,
+        info: newDevice.info
+      }))
+    } catch (error) {
+      console.log(error.response.data.message)
+    }
+  }
 
-    formData.append('name', data.name);
-    formData.append('coast', data.coast);
-    formData.append('image', data.image);
-    formData.append('brand', data.brand);
-    formData.append('type', data.type);
-    formData.append('info', JSON.stringify(data.info));
+  const getDevice = async (id) => {
+    try {
+      const deviceInfo = await deviceApi.getDevice(id);
+      return deviceInfo
+    } catch (error) {
+      console.log(error.response.data.message)
+    }
 
-    await deviceApi.addDevice(formData, token);
   }
 
   return (
@@ -196,7 +194,7 @@ export function App() {
                 />
                 <Route
                   path='/device/:id'
-                  element={<DevicePage setCurrentUser={setCurrentUser} />}
+                  element={<DevicePage setCurrentUser={setCurrentUser} getDevice={getDevice} loggedIn={currentUser.isLoggedIn} />}
                 />
 
                 <Route

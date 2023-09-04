@@ -16,7 +16,6 @@ export const Admin = ({handleAddType, handleAddBrand, handleAddDevice}) => {
         }))
     }
 
-
     return (
         <>
             <Header />

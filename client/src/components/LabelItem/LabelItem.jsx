@@ -1,6 +1,6 @@
 import React from "react";
 
-export const LabelItem = ({ title, name, type, onChange, values, errors }) => {
+export const LabelItem = ({ title, name, type, onChange, values, errors, accept }) => {
     return (<>
         <label className="createItem__label">
             <span className="createItem__span"></span>
@@ -13,6 +13,7 @@ export const LabelItem = ({ title, name, type, onChange, values, errors }) => {
                 onChange={onChange}
                 autoComplete={name}
                 required
+                accept={accept}
             />
             <span className='createItem__error'>{errors[name]}</span>
         </label>

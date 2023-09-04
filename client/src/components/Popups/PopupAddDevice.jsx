@@ -9,6 +9,7 @@ export const PopupDevice = ({ setFormHidden, setPopupList, handleAddDevice }) =>
     const [info, setInfo] = useState([]);
     const deviceTypes = useContext(DeviceTypeContext);
     const deviceBrand = useContext(DeviceBrandContext);
+    const [image, setImage] = useState()
     const { values, errors, isValid, handleChange, handleSelectChange } = useFormValidation();
     const HideForm = () => {
         setFormHidden(true)
@@ -30,22 +31,20 @@ export const PopupDevice = ({ setFormHidden, setPopupList, handleAddDevice }) =>
         setInfo(info.map(i => i.number === number ? { ...i, [key]: value } : i))
     }
 
+    const loadImage = (e) => {
+        const img = e.target.files[0]
+        setImage(img)
+    }
 
     function handleSubmit(e) {
-        const { name, image, coast, type, brand } = values;
-        const newCoast = Number(coast)
+        const { name, price, type, brand } = values;
+        const newPrice = Number(price)
         const brandId = deviceBrand.find(item => item.name === brand).id;
         const typeId = deviceTypes.find(item => item.name === type).id;
         e.preventDefault();
-        // const formData = new FormData();
-        // formData.append('name', name)
-        // formData.append('price', newCoast)
-        // formData.append('img', image)
-        // formData.append('brandId', brandId)
-        // formData.append('typeId', typeId)
-        // formData.append('info', JSON.stringify(info))
-        console.log({ 'name': name, 'price': coast, 'img': image, 'brandId': brandId, 'typeId': typeId, 'info': info });
-        handleAddDevice(values);
+        // console.log({ 'name': name, 'price': newPrice, 'img': image, 'brandId': brandId, 'typeId': typeId, 'info': info }, 'PopupDevice');
+        handleAddDevice({ 'name': name, 'price': newPrice, 'img': image, 'brandId': brandId, 'typeId': typeId, 'info': info });
+        console.log(123);
         HideForm()
     }
 
@@ -78,20 +77,19 @@ export const PopupDevice = ({ setFormHidden, setPopupList, handleAddDevice }) =>
                         errors={errors}
                     />
                     <LabelItem
-                        title="coast"
-                        name='coast'
+                        title="price"
+                        name='price'
                         type={'number'}
                         onChange={handleChange}
                         values={values}
                         errors={errors}
                     />
-                    <LabelItem
-                        title="image"
-                        name='image'
+                    <input
+                        className="createItem__input"
+                        title="img"
+                        name='img'
                         type='file'
-                        onChange={handleChange}
-                        values={values}
-                        errors={errors}
+                        onChange={loadImage}
                     />
                 </>
                 <button onClick={(e) => { e.preventDefault(); addInfo() }}>Add info</button>

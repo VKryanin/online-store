@@ -1,31 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import { useParams } from 'react-router-dom';
-import { DeviceContext } from "../../context/DeviceContext";
+// import { DeviceContext } from "../../context/DeviceContext";
 
-
-
-export const DevicePage = ({ loggedIn }) => {
-    const devices = useContext(DeviceContext)
+export const DevicePage = ({ setCurrentUser, getDevice }) => {
     const { id } = useParams();
-    const deviceList = devices && devices.rows.map(device => device)
-    const deviceItem = deviceList && deviceList.find(item => item.id === +id)
+    const [deviceInfo, setDeviceInfo] = useState(null);
+
+
+    useEffect(() => {
+        getDevice(id)
+            .then(setDeviceInfo)
+            .catch(e => console.error(e))
+    }, [])
+    console.log(deviceInfo && { ...deviceInfo.info });
     return (
         <>
-            <Header loggedIn={loggedIn} />
-            {deviceItem && (
-                <div>
-                    <h2>{deviceItem.name}</h2>
-                    <p>Другие свойства объекта:</p>
-                    <p>Brand ID: {deviceItem.brandId}</p>
-                    <p>Created At: {deviceItem.createdAt}</p>
-                    <p>Image: {deviceItem.img}</p>
-                    <p>Price: {deviceItem.price}</p>
-                    <p>Rating: {deviceItem.rating}</p>
-                    <p>Type ID: {deviceItem.typeId}</p>
-                    <p>Updated At: {deviceItem.updatedAt}</p>
-                </div>
-            )}
+            <Header loggedIn={setCurrentUser.isLoggedIn} />
+            {deviceInfo && <div >
+                <h2>{deviceInfo.name}</h2>
+                <p>Другие свойства объекта:</p>
+                <p>Brand ID: {deviceInfo.brandId}</p>
+                {
+                    deviceInfo.info.map(item => <p key={item.id}>{`${item.title}: ${item.description}`}</p>)
+                }
+                <img src={`${process.env.REACT_APP_API_URL}/${deviceInfo.img}`} alt="img" />
+                <p>Price: {deviceInfo.price}</p>
+                <p>Rating: {deviceInfo.rating}</p>
+                <p>Type ID: {deviceInfo.typeId}</p>
+            </div>}
         </>
-    )
-}
+    );
+};

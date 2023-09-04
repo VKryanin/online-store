@@ -51,18 +51,29 @@ class DeviceApi {
     }
 
     addDevice(data, token) {
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('price', data.price);
+        formData.append('img', data.img);
+        formData.append('brandId', data.brandId);
+        formData.append('typeId', data.typeId);
+        formData.append('info', JSON.stringify(data.info));
         return fetch(`${this._link}/device`, {
             headers: {
                 authorization: `Bearer ${token}`
             },
             method: 'POST',
-            body: data
+            body: formData
         }).then((res) => this._checkResponse(res))
     }
 
     getDevice(id) {
         return fetch(`${this._link}/device/${id}`, {
         })
+            .then((res) => this._checkResponse(res))
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     getDevices() {
