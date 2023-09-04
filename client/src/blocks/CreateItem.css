@@ -7,20 +7,26 @@
     background-color: rgba(196, 196, 196, 0.3);
 }
 
-.createItem__form {
-    background-color: #fff;
-    opacity: 1;
-    width: 350px;
-    min-height: 350px;
+.createItem__wrapper {
     position: absolute;
     transform: translate(50%, -50%);
     top: 50%;
     right: 50%;
+    background-color: #fff;
+    width: 500px;
+    border-radius: 5px;
+    padding: 40px;
+
+}
+
+.createItem__form {
+    opacity: 1;
+    width: 350px;
+    /* min-height: 350px; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 5px;
-    padding: 40px;
+    margin: 0 auto;
 }
 
 .createItem__title {
@@ -36,6 +42,7 @@
     cursor: pointer;
     transition: all .3s linear;
 }
+
 .createItem__close:hover {
     scale: 1.2;
 }

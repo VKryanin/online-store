@@ -33,5 +33,21 @@ export const useFormValidation = (
         []
     );
 
-    return { values, errors, isValid, handleChange, resetForm, setValues };
+    const handleSelectChange = useCallback((evt) => {
+        const target = evt.target;
+        const name = target.name;
+        const value = target.value;
+        console.log(target.id);
+        setValues((prevValues) => ({
+            ...prevValues,
+            [name]: value,
+        }));
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: target.validationMessage,
+        }));
+        setValid(target.closest("form").checkValidity());
+    }, []);
+
+    return { values, errors, isValid, handleChange, resetForm, setValues, handleSelectChange };
 };

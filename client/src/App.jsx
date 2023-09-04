@@ -132,6 +132,35 @@ export function App() {
     }
   }
 
+  // const handleAddDevice = async (data) => {
+  //   console.log(data);
+  //   const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+  //   const newDevice = await deviceApi.addDevice(data, token)
+  //   await deviceApi.addDevice(data, token)
+  //   try {
+  //     setDevice(prev => ({
+  //       ...prev,
+  //       name: newDevice.name
+  //     }))
+  //   } catch (error) {
+  //     console.log(error.response.data.message);
+  //   }
+  // }
+
+  const handleAddDevice = async (data) => {
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+    const formData = new FormData();
+
+    formData.append('name', data.name);
+    formData.append('coast', data.coast);
+    formData.append('image', data.image);
+    formData.append('brand', data.brand);
+    formData.append('type', data.type);
+    formData.append('info', JSON.stringify(data.info));
+
+    await deviceApi.addDevice(formData, token);
+  }
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser} >
@@ -148,7 +177,13 @@ export function App() {
                   <Route path="/profile" element={<Profile />} />
                   <Route
                     path='/admin'
-                    element={<Admin handleAddType={handleAddType} handleAddBrand={handleAddBrand} />}
+                    element={
+                      <Admin
+                        handleAddType={handleAddType}
+                        handleAddBrand={handleAddBrand}
+                        handleAddDevice={handleAddDevice}
+                      />
+                    }
                   />
                 </Route>
                 <Route

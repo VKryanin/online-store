@@ -1,7 +1,6 @@
 import React from "react";
 
 export const LabelItem = ({ title, name, type, onChange, values, errors }) => {
-    console.log(values);
     return (<>
         <label className="createItem__label">
             <span className="createItem__span"></span>

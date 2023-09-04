@@ -4,7 +4,7 @@ import { PopupAddType } from "../Popups/PopupAddType";
 import { PopupAddBrand } from "../Popups/PopupAddBrand";
 import { PopupDevice } from "../Popups/PopupAddDevice";
 
-export const Admin = ({handleAddType, handleAddBrand}) => {
+export const Admin = ({handleAddType, handleAddBrand, handleAddDevice}) => {
     const [formHidden, setFormHidden] = useState(true);
     const [popupList, setPopupList] = useState({ addType: false, addBrand: false, addDevice: false })
 
@@ -28,7 +28,7 @@ export const Admin = ({handleAddType, handleAddBrand}) => {
             {!formHidden && <div className="createItem">
                 {popupList.addType && <PopupAddType setFormHidden={setFormHidden} setPopupList={setPopupList} handleAddType={handleAddType} />}
                 {popupList.addBrand && <PopupAddBrand setFormHidden={setFormHidden} setPopupList={setPopupList} handleAddBrand={handleAddBrand}/>}
-                {popupList.addDevice && <PopupDevice setFormHidden={setFormHidden} setPopupList={setPopupList} />}
+                {popupList.addDevice && <PopupDevice setFormHidden={setFormHidden} setPopupList={setPopupList} handleAddDevice={handleAddDevice}/>}
             </div >}
         </>
     )

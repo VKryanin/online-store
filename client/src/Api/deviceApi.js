@@ -50,13 +50,13 @@ class DeviceApi {
         }).then((res) => this._checkResponse(res))
     }
 
-    addDevice({ name, price, brandId, typeId, img }) {
+    addDevice(data, token) {
         return fetch(`${this._link}/device`, {
             headers: {
-                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`
             },
             method: 'POST',
-            body: JSON.stringify({ name, price, brandId, typeId, img })
+            body: data
         }).then((res) => this._checkResponse(res))
     }
 
