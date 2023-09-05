@@ -194,6 +194,7 @@ export function App() {
                         handleAddType={handleAddType}
                         handleAddBrand={handleAddBrand}
                         handleAddDevice={handleAddDevice}
+                        logout={logout}
                       />
                     }
                   />
@@ -208,7 +209,7 @@ export function App() {
                 />
                 <Route
                   path='/device/:id'
-                  element={<DevicePage setCurrentUser={setCurrentUser} getDevice={getDevice} loggedIn={currentUser.isLoggedIn} />}
+                  element={<DevicePage setCurrentUser={setCurrentUser} getDevice={getDevice} logout={logout} />}
                 />
 
                 <Route

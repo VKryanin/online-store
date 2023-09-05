@@ -4,7 +4,7 @@ import { PopupAddType } from "../Popups/PopupAddType";
 import { PopupAddBrand } from "../Popups/PopupAddBrand";
 import { PopupDevice } from "../Popups/PopupAddDevice";
 
-export const Admin = ({handleAddType, handleAddBrand, handleAddDevice}) => {
+export const Admin = ({handleAddType, handleAddBrand, handleAddDevice, logout={logout}}) => {
     const [formHidden, setFormHidden] = useState(true);
     const [popupList, setPopupList] = useState({ addType: false, addBrand: false, addDevice: false })
 
@@ -18,7 +18,7 @@ export const Admin = ({handleAddType, handleAddBrand, handleAddDevice}) => {
 
     return (
         <>
-            <Header />
+            <Header logout={logout}/>
             <section className="admin">
                 <button className="admin__button" onClick={() => { handleClick('addType') }}>add type</button>
                 <button className="admin__button" onClick={() => { handleClick('addBrand') }}>add brand</button>

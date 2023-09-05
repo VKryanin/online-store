@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Header } from "../Header/Header";
 import { useParams } from 'react-router-dom';
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-export const DevicePage = ({ setCurrentUser, getDevice }) => {
+export const DevicePage = ({ setCurrentUser, getDevice, logout }) => {
+    const currentUser = useContext(CurrentUserContext);
     const { id } = useParams();
     const [deviceInfo, setDeviceInfo] = useState(null);
 
@@ -13,7 +15,7 @@ export const DevicePage = ({ setCurrentUser, getDevice }) => {
     }, [])
     return (
         <>
-            <Header loggedIn={setCurrentUser.isLoggedIn} />
+            <Header loggedIn={currentUser.loggedIn} logout={logout} />
             {deviceInfo && <div >
                 <h2>{deviceInfo.name}</h2>
                 <p>Другие свойства объекта:</p>

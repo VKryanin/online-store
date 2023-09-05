@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Header } from "../Header/Header";
 import { TypeBar } from "../TypeBar/TypeBar";
 import { BrandBar } from "../BrandBar/BrandBar";
@@ -10,8 +10,23 @@ export const Shop = ({ logout, setFilter }) => {
     const currentUser = useContext(CurrentUserContext);
     const deviceTypes = useContext(DeviceTypeContext);
     const deviceBrands = useContext(DeviceBrandContext);
-    const devices = useContext(DeviceContext)
-    console.log(devices);
+    const devices = useContext(DeviceContext);
+    const [pagesCount, setPagesCount] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
+    const pages = [];
+    useEffect(() => {
+        setPagesCount(devices && Math.ceil(devices.count / 9));
+    }, [devices])
+
+    for (let i = 0; i < pagesCount; i++) {
+        pages.push(i + 1)
+    }
+
+    const setPage = (page) => {
+        setFilter({ page: page })
+        setCurrentPage(page)
+    }
+
     return (
         <>
             <Header loggedIn={currentUser.loggedIn} logout={logout} />
@@ -22,7 +37,21 @@ export const Shop = ({ logout, setFilter }) => {
                 </aside>
                 <main className="shop__content">
                     <DeviceList devices={devices} />
-
+                    <ul className="shop__paggination">
+                        {pages.map((page) => (
+                            <li
+                                key={page}
+                                className={currentPage === page
+                                    ? "shop__page shop__page_active"
+                                    : "shop__page"}
+                                onClick={() =>
+                                    setPage(page)
+                                }>
+                                {page}
+                            </li>
+                        ))
+                        }
+                    </ul>
                 </main>
             </section>
         </>

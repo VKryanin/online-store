@@ -23,3 +23,17 @@
     border: 1px solid #C4C4C4;
     border-radius: 5px;
 }
+
+.shop__paggination {
+    display: flex;
+    list-style: none;
+}
+
+.shop__page {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.shop__page_active {
+    color: blue;
+}
