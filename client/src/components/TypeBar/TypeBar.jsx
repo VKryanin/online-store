@@ -1,10 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-export const TypeBar = ({ deviceTypes }) => {
+export const TypeBar = ({ deviceTypes, setFilter }) => {
     const [selectedType, setSelectedType] = useState();
 
     const handleTypeClick = (type) => {
-        setSelectedType(type);
+        if (selectedType === type.name) {
+            setSelectedType(undefined);
+            setFilter(prev => ({
+                ...prev,
+                typeId: undefined
+            }))
+
+        } else {
+            setSelectedType(type.name);
+            setFilter(prev => ({
+                ...prev,
+                typeId: type.id
+            }))
+        }
     }
 
     return (
@@ -12,23 +25,14 @@ export const TypeBar = ({ deviceTypes }) => {
             <h2 className="sideBar__title">Choose device type</h2>
             {deviceTypes && deviceTypes.map((type) => (
                 <li
-                    className={
-                        selectedType === type.name
-                            ? "sideBar__item selected"
-                            : "sideBar__item"
-                    }
-                    active={
-                        selectedType === type.name
-                            ? "true"
-                            : "false"
-                    }
-                    onClick={() => handleTypeClick(type.name)}
+                    className={selectedType === type.name ? "sideBar__item selected" : "sideBar__item"}
+                    active={selectedType === type.name ? "true" : "false"}
+                    onClick={() => handleTypeClick(type)}
                     key={type.id}
                 >
                     {type.name}
                 </li>
-            ))
-            }
+            ))}
         </ul>
     )
 }

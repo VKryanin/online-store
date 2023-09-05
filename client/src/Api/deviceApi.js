@@ -76,12 +76,23 @@ class DeviceApi {
             });
     }
 
-    getDevices() {
-        return fetch(`${this._link}/device`, {
+    getDevices(brandId, typeId, limit, page) {
+        const params = {
+            ...brandId,
+            ...typeId,
+            ...limit,
+            ...page
+        };
+        const queryString = Object.entries(params)
+            .filter(([key, value]) => value && key !== undefined) // Фильтруем только определенные значения
+            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+            .join('&');
+        const url = `${this._link}/device?${queryString}`;
+        return fetch(url, {
             headers: {
                 "Content-Type": "application/json",
             },
-        }).then((res) => this._checkResponse(res))
+        }).then((res) => this._checkResponse(res));
     }
 }
 

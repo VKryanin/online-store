@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import { useParams } from 'react-router-dom';
-// import { DeviceContext } from "../../context/DeviceContext";
 
 export const DevicePage = ({ setCurrentUser, getDevice }) => {
     const { id } = useParams();
     const [deviceInfo, setDeviceInfo] = useState(null);
-
 
     useEffect(() => {
         getDevice(id)
             .then(setDeviceInfo)
             .catch(e => console.error(e))
     }, [])
-    console.log(deviceInfo && { ...deviceInfo.info });
     return (
         <>
             <Header loggedIn={setCurrentUser.isLoggedIn} />
@@ -29,6 +26,7 @@ export const DevicePage = ({ setCurrentUser, getDevice }) => {
                 <p>Rating: {deviceInfo.rating}</p>
                 <p>Type ID: {deviceInfo.typeId}</p>
             </div>}
+
         </>
     );
 };

@@ -21,6 +21,7 @@ export function App() {
   const location = useLocation();
   const [deviceTypes, setDeviceType] = useState()
   const [deviceBrand, setDeviceBrand] = useState();
+  const [filter, setFilter] = useState()
   const [devices, setDevice] = useState();
   const isLogin = location.pathname === '/login';
   const [currentUser, setCurrentUser] = useState({
@@ -50,6 +51,10 @@ export function App() {
     deviceBrands()
     device()
   }, [])
+
+  useEffect(() => {
+    filterDevice(filter)
+  }, [filter])
 
   useEffect(() => {
     if (currentUser.isLoggedIn) {
@@ -156,7 +161,16 @@ export function App() {
     } catch (error) {
       console.log(error.response.data.message)
     }
+  }
 
+  const filterDevice = async (filter) => {
+    try {
+      deviceApi.getDevices(filter)
+        .then(setDevice)
+        .catch(e => console.error(e))
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
   }
 
   return (
@@ -168,7 +182,7 @@ export function App() {
               <Routes>
                 <Route
                   path='/'
-                  element={<Shop setCurrentUser={setCurrentUser} logout={logout} />}
+                  element={<Shop setCurrentUser={setCurrentUser} logout={logout} setFilter={setFilter} />}
                 />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/basket" element={<Basket />} />

@@ -1,10 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-export const BrandBar = ({ deviceBrands }) => {
+export const BrandBar = ({ deviceBrands, setFilter }) => {
     const [selectedBrand, setSelectedBrand] = useState();
 
     const handleTypeClick = (brand) => {
-        setSelectedBrand(brand);
+        if (selectedBrand === brand.name) {
+            setSelectedBrand(undefined);
+            setFilter(prev => ({
+                ...prev,
+                brandId: undefined
+            }))
+        } else {
+            setSelectedBrand(brand.name);
+            setFilter(prev => ({
+                ...prev,
+                brandId: brand.id
+            }))
+        }
     }
 
     return (
@@ -23,7 +35,7 @@ export const BrandBar = ({ deviceBrands }) => {
                             : "false"
                     }
                     key={brand.id}
-                    onClick={() => handleTypeClick(brand.name)}
+                    onClick={() => handleTypeClick(brand)}
                 >
                     {brand.name}
                 </li>
