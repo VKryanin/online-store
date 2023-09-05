@@ -11,7 +11,7 @@ export const Header = ({ logout }) => {
     }
     return (
         <header className="header">
-            <NavLink className='header__link' to={'/'}>SoqaShop</NavLink>
+            <NavLink className='header__logo' to={'/'}>SoqaShop</NavLink>
             {currentUser.isLoggedIn
                 ? <nav className="header__nav">
                     {currentUser.role === 'ADMIN'
@@ -24,8 +24,17 @@ export const Header = ({ logout }) => {
                     }}>Exit</button>
                 </nav>
                 : <nav className="header__nav">
-                    <NavLink to={'/login'} className="header__button">Login</NavLink>
-                    <NavLink to={'/registration'} className="header__button">Registration</NavLink>
+                    <div className="header__links">
+                        <NavLink to={'/login'} className="header__link">
+                            Login
+                        </NavLink>
+                    </div>
+                    <div className="header__links">
+                        <NavLink to={'/registration'} className="header__link">
+                            Registration
+                        </NavLink>
+                    </div>
+
                 </nav>
             }
         </header>

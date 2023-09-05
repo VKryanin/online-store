@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Header } from "../Header/Header";
 import { useParams } from 'react-router-dom';
 import { CurrentUserContext } from "../../context/CurrentUserContext";
+import rate from '../../image/rating.svg';
 
 export const DevicePage = ({ setCurrentUser, getDevice, logout }) => {
     const currentUser = useContext(CurrentUserContext);
@@ -16,18 +17,28 @@ export const DevicePage = ({ setCurrentUser, getDevice, logout }) => {
     return (
         <>
             <Header loggedIn={currentUser.loggedIn} logout={logout} />
-            {deviceInfo && <div >
-                <h2>{deviceInfo.name}</h2>
+            {deviceInfo && <main className="devicePage">
+                <div className="devicePage__container">
+                    <img
+                        className="devicePage__image"
+                        src={`${process.env.REACT_APP_API_URL}/${deviceInfo.img}`}
+                        alt="img"
+                    />
+                    <div>
+                        <h2 className="devicePage__title">{deviceInfo.name}</h2>
+                        <div className="devicePage__rating">
+                            {deviceInfo.rating}
+                        </div>
+                    </div>
+                    <div className="devicePage__basket">
+                        <p>{deviceInfo.price} руб.</p>
+                    </div>
+                </div>
                 <p>Другие свойства объекта:</p>
-                <p>Brand ID: {deviceInfo.brandId}</p>
                 {
                     deviceInfo.info.map(item => <p key={item.id}>{`${item.title}: ${item.description}`}</p>)
                 }
-                <img src={`${process.env.REACT_APP_API_URL}/${deviceInfo.img}`} alt="img" />
-                <p>Price: {deviceInfo.price}</p>
-                <p>Rating: {deviceInfo.rating}</p>
-                <p>Type ID: {deviceInfo.typeId}</p>
-            </div>}
+            </main>}
 
         </>
     );

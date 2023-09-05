@@ -11,9 +11,10 @@
 @import url(./blocks/CreateItem.css);
 @import url(./blocks/LabelItem.css);
 @import url(./blocks/SelectedItem.css);
+@import url(./blocks/DevicePage.css);
 
 .root {
-    background-color: #fff;
+    background-color: #f3f3f3;
     font-family: 'Inter', Arial, sans-serif;
     color: #000;
     min-height: 100vh;

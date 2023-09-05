@@ -33,10 +33,10 @@ export const Shop = ({ logout, setFilter }) => {
             <section className="shop">
                 <aside className="shop__filter">
                     <TypeBar deviceTypes={deviceTypes} setFilter={setFilter} />
-                    < BrandBar deviceBrands={deviceBrands} setFilter={setFilter} />
                 </aside>
                 <main className="shop__content">
-                    <DeviceList devices={devices} />
+                    < BrandBar deviceBrands={deviceBrands} setFilter={setFilter} />
+                    <DeviceList devices={devices} deviceBrands={deviceBrands} deviceTypes={deviceTypes} />
                     <ul className="shop__paggination">
                         {pages.map((page) => (
                             <li

@@ -20,14 +20,13 @@ export const BrandBar = ({ deviceBrands, setFilter }) => {
     }
 
     return (
-        <ul className="sideBar__list">
-            <h2 className="sideBar__title">Choose device brand</h2>
+        <ul className="sideBar__list brands">
             {deviceBrands && deviceBrands.map((brand) =>
                 <li
                     className={
                         selectedBrand === brand.name
-                            ? "sideBar__item selected"
-                            : "sideBar__item"
+                            ? "sideBar__item selected brand"
+                            : "sideBar__item brand"
                     }
                     active={
                         selectedBrand === brand.name
