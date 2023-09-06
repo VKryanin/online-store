@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import rate from '../../image/rating.svg'
 
@@ -9,6 +9,8 @@ export const DeviceList = ({ devices, deviceBrands, deviceTypes }) => {
     }
     const brandsMap = new Map(deviceBrands && deviceBrands.map(brand => [brand.id, brand.name]));
     const typeMap = new Map(deviceTypes && deviceTypes.map(type => [type.id, type.name]));
+
+    useEffect(()=> {}, [])
     return (
         <>
             <ul className="deviceList">

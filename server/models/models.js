@@ -51,10 +51,10 @@ const Device = sequelize.define('device', {
         allowNull: false
     },
     price: {
-        type: DataTypes.INTEGER, allowNull: false
+        type: DataTypes.FLOAT, allowNull: false
     },
     rating: {
-        type: DataTypes.INTEGER, defaultValue: 0
+        type: DataTypes.FLOAT, defaultValue: 0
     },
     img: {
         type: DataTypes.STRING, allowNull: false
@@ -94,7 +94,7 @@ const Rating = sequelize.define('rating', {
         autoIncrement: true
     },
     rate: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false
     }
 })

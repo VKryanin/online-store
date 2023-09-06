@@ -68,7 +68,6 @@ class DeviceApi {
     }
 
     addRating(data, token) {
-        console.log(data, token, 'addRating');
         return fetch(`${this._link}/rating`, {
             headers: {
                 "Content-Type": "application/json",

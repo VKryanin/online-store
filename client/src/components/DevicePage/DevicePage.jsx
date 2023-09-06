@@ -9,11 +9,23 @@ export const DevicePage = ({ getDevice, logout, handleAddRating }) => {
     const { id } = useParams();
     const [deviceInfo, setDeviceInfo] = useState(null);
     const [isOpen, setIsOpen] = useState(false)
-    useEffect(() => {
+
+    function observeDeviceInfo() {
         getDevice(id)
             .then(setDeviceInfo)
             .catch(e => console.error(e))
+    }
+
+    useEffect(() => {
+        observeDeviceInfo()
     }, [])
+
+    const handleSubmit = async (event, rating) => {
+        event.preventDefault();
+        await handleAddRating({ rating: rating, id: deviceInfo.id })
+        observeDeviceInfo()
+    };
+
     return (
         <>
             <Header loggedIn={currentUser.loggedIn} logout={logout} />
@@ -66,7 +78,7 @@ export const DevicePage = ({ getDevice, logout, handleAddRating }) => {
                         }
                     </div>
                     {isOpen &&
-                        <AddRating setIsOpen={setIsOpen} handleAddRating={handleAddRating} deviceInfo={deviceInfo}/>
+                        <AddRating setIsOpen={setIsOpen} handleAddRating={handleAddRating} deviceInfo={deviceInfo} handleSubmit={handleSubmit} />
                     }
                 </main>
             }

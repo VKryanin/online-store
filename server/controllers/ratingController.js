@@ -1,6 +1,7 @@
 const { Rating, Device, User } = require('../models/models');
 const ApiError = require('../error/ApiError');
 const jwt = require('jsonwebtoken');
+const { where } = require('sequelize');
 
 class RatingController {
     async addRating(req, res, next) {
@@ -8,36 +9,30 @@ class RatingController {
         const userId = jwt.decode(token, process.env.SECRET_KEY).id
         const { deviceId, rate } = req.body;
         try {
-            const existingRating = await Rating.findOne({
-                where: { deviceId, userId },
+            const existingRating = await Rating.findAll({
+                where: { deviceId, userId }
             });
-
-            if (existingRating) {
-
-                existingRating.rate = rate;
-                await existingRating.save();
-                return res.json(existingRating);
+            if (existingRating.length) {
+                await Rating.update({
+                    rate: rate,
+                }, { where: { userId, deviceId } });
+            } else {
+                await Rating.create({
+                    rate: rate,
+                    userId: userId,
+                    deviceId: deviceId
+                });
             }
-
-            const rating = await Rating.create({
-                deviceId,
-                userId,
-                rate,
-            });
-
-            const device = await Device.findByPk(deviceId);
-            const existingRatings = await Rating.findAll({
+            const allRatings = await Rating.findAll({
                 where: { deviceId },
+                attributes: ["rate"],
             });
+            const ratingList = allRatings.map(({ dataValues }) => dataValues)
+            const middleRait = (ratingList.reduce((accumulator, { rate }) => accumulator + rate, 0) / ratingList.length).toFixed(1)
 
-            let totalRate = 0;
-            
-            existingRatings.forEach((rating) => {
-                totalRate += rating.rate;
-            });
-
-            device.rating = totalRate / existingRatings.length;
-            await device.save();
+            const rating = await Device.update({
+                rating: middleRait,
+            }, { where: { id: deviceId } });
 
             return res.json(rating);
         } catch (e) {

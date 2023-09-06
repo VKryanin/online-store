@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const AddRating = ({ setIsOpen, handleAddRating, deviceInfo }) => {
+export const AddRating = ({ setIsOpen, handleAddRating, deviceInfo, handleSubmit }) => {
     const [rating, setRating] = useState(1);
     const handleInputChange = (event) => {
         const value = event.target.value;
@@ -9,15 +9,11 @@ export const AddRating = ({ setIsOpen, handleAddRating, deviceInfo }) => {
         setRating(validatedValue);
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(rating, deviceInfo.id, 'AddRating popup');
-        handleAddRating({ rating: rating, id: deviceInfo.id })
-    };
+
 
     return (
         <div className="popup__rate">
-            <form className="popup__form_rate" onSubmit={handleSubmit}>
+            <form className="popup__form_rate" onSubmit={(event) => handleSubmit(event, rating, deviceInfo.id)}>
                 <input
                     className="popup__form_rate_input"
                     type="text"

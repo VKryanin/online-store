@@ -6,7 +6,7 @@ import { DeviceList } from "../DeviceList/DeviceList";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { DeviceTypeContext, DeviceBrandContext, DeviceContext } from "../../context/DeviceContext";
 
-export const Shop = ({ logout, setFilter }) => {
+export const Shop = ({ logout, setFilter, renderComponent }) => {
     const currentUser = useContext(CurrentUserContext);
     const deviceTypes = useContext(DeviceTypeContext);
     const deviceBrands = useContext(DeviceBrandContext);
@@ -18,6 +18,10 @@ export const Shop = ({ logout, setFilter }) => {
     useEffect(() => {
         setPagesCount(devices && Math.ceil(devices.count / 9));
     }, [devices, triggerUpdate])
+
+    useEffect(() => {
+        renderComponent()
+    }, [])
 
     for (let i = 0; i < pagesCount; i++) {
         pages.push(i + 1)

@@ -20,6 +20,8 @@ export const TypeBar = ({ deviceTypes, setFilter }) => {
         }
     }
 
+    console.log(deviceTypes);
+
     return (
         <ul className="sideBar__list">
             <h2 className="sideBar__title">Choose device type</h2>

@@ -18,8 +18,8 @@ import { Profile } from "./components/Profile/Profile";
 export function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [deviceTypes, setDeviceType] = useState()
-  const [deviceBrand, setDeviceBrand] = useState();
+  const [deviceTypes, setDeviceType] = useState([])
+  const [deviceBrand, setDeviceBrand] = useState([]);
   const [filter, setFilter] = useState()
   const [devices, setDevice] = useState();
   const isLogin = location.pathname === '/login';
@@ -45,10 +45,14 @@ export function App() {
       .catch(e => console.error(e))
   }
 
-  useEffect(() => {
+  const renderComponent = () => {
     deviceType()
     deviceBrands()
     device()
+  }
+
+  useEffect(() => {
+    renderComponent()
   }, [])
 
   useEffect(() => {
@@ -113,10 +117,9 @@ export function App() {
     const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)
     const newType = await deviceApi.addType(name, token)
     try {
-      setDeviceType(prev => ({
-        ...prev,
-        name: newType.name
-      }))
+      setDeviceType(
+        deviceTypes.concat(newType)
+      )
     } catch (error) {
       console.log(error.response.data.message)
     }
@@ -126,10 +129,7 @@ export function App() {
     const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)
     const newBrand = await deviceApi.addBrand(name, token)
     try {
-      setDeviceBrand(prev => ({
-        ...prev,
-        name: newBrand.name
-      }))
+      setDeviceBrand(deviceTypes.concat(newBrand))
     } catch (error) {
       console.log(error.response.data.message)
     }
@@ -153,14 +153,12 @@ export function App() {
     }
   }
 
-  const handleAddRating = async ({rating, id}) => {
+  const handleAddRating = async ({ rating, id }) => {
     const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
-    console.log(rating, id, 'handleAddRating');
     const data = {
-      deviceId: id, 
+      deviceId: id,
       rate: rating
     };
-    console.log(data, 'before deviceApi.addRating');
     try {
       await deviceApi.addRating(data, token);
     } catch (error) {
@@ -196,7 +194,7 @@ export function App() {
               <Routes>
                 <Route
                   path='/'
-                  element={<Shop setCurrentUser={setCurrentUser} logout={logout} setFilter={setFilter} />}
+                  element={<Shop setCurrentUser={setCurrentUser} logout={logout} setFilter={setFilter} renderComponent={renderComponent}/>}
                 />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/basket" element={<Basket />} />
@@ -225,7 +223,6 @@ export function App() {
                   path='/device/:id'
                   element={<DevicePage setCurrentUser={setCurrentUser} getDevice={getDevice} logout={logout} handleAddRating={handleAddRating} />}
                 />
-
                 <Route
                   path='/*'
                   element={<NotFound />}
