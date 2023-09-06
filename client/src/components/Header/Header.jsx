@@ -18,20 +18,20 @@ export const Header = ({ logout }) => {
                         ? <button className="header__button" onClick={() => { OpenAdminPanel() }}>Admin</button>
                         : <></>
                     }
-                    <NavLink to={'/profile'} className="header__button">Profile</NavLink>
+                    <NavLink to={'/profile'} className="header__button">Профиль</NavLink>
                     <button className="header__button" onClick={() => {
                         logout()
-                    }}>Exit</button>
+                    }}>Выйти</button>
                 </nav>
                 : <nav className="header__nav">
                     <div className="header__links">
                         <NavLink to={'/login'} className="header__link">
-                            Login
+                            Логин
                         </NavLink>
                     </div>
                     <div className="header__links">
                         <NavLink to={'/registration'} className="header__link">
-                            Registration
+                            Регистрация
                         </NavLink>
                     </div>
 

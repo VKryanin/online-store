@@ -67,6 +67,18 @@ class DeviceApi {
         }).then((res) => this._checkResponse(res))
     }
 
+    addRating(data, token) {
+        console.log(data, token, 'addRating');
+        return fetch(`${this._link}/rating`, {
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`
+            },
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+    }
+
     getDevice(id) {
         return fetch(`${this._link}/device/${id}`, {
         })

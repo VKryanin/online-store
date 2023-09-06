@@ -13,10 +13,11 @@ export const Shop = ({ logout, setFilter }) => {
     const devices = useContext(DeviceContext);
     const [pagesCount, setPagesCount] = useState();
     const [currentPage, setCurrentPage] = useState(1);
+    const [triggerUpdate, setTriggerUpdate] = useState(false);
     const pages = [];
     useEffect(() => {
         setPagesCount(devices && Math.ceil(devices.count / 9));
-    }, [devices])
+    }, [devices, triggerUpdate])
 
     for (let i = 0; i < pagesCount; i++) {
         pages.push(i + 1)
@@ -25,6 +26,7 @@ export const Shop = ({ logout, setFilter }) => {
     const setPage = (page) => {
         setFilter({ page: page })
         setCurrentPage(page)
+        setTriggerUpdate(true);
     }
 
     return (

@@ -10,7 +10,6 @@ import { Admin } from './components/Admin/Admin';
 import { NotFound } from "./components/NotFound/NotFound";
 import { CurrentUserContext } from "./context/CurrentUserContext";
 import { DeviceTypeContext, DeviceBrandContext, DeviceContext } from "./context/DeviceContext";
-
 import { userApi } from "./Api/userApi";
 import { deviceApi } from './Api/deviceApi'
 import { LOCAL_STORAGE_TOKEN_KEY } from "./utils/constants";
@@ -154,6 +153,21 @@ export function App() {
     }
   }
 
+  const handleAddRating = async ({rating, id}) => {
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+    console.log(rating, id, 'handleAddRating');
+    const data = {
+      deviceId: id, 
+      rate: rating
+    };
+    console.log(data, 'before deviceApi.addRating');
+    try {
+      await deviceApi.addRating(data, token);
+    } catch (error) {
+      console.log(error.response?.data.message);
+    }
+  };
+
   const getDevice = async (id) => {
     try {
       const deviceInfo = await deviceApi.getDevice(id);
@@ -209,7 +223,7 @@ export function App() {
                 />
                 <Route
                   path='/device/:id'
-                  element={<DevicePage setCurrentUser={setCurrentUser} getDevice={getDevice} logout={logout} />}
+                  element={<DevicePage setCurrentUser={setCurrentUser} getDevice={getDevice} logout={logout} handleAddRating={handleAddRating} />}
                 />
 
                 <Route
