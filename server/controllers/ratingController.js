@@ -31,6 +31,7 @@ class RatingController {
             });
 
             let totalRate = 0;
+            
             existingRatings.forEach((rating) => {
                 totalRate += rating.rate;
             });
