@@ -11,11 +11,11 @@ export const Registration = ({ setCurrentUser, auth }) => {
     return (
         <div className="auth">
             <header className="auth__header">
-                <NavLink className='header__link' to={'/'}>SoqaShop</NavLink>
+                <NavLink className='header__logo' to={'/'}>SoqaShop</NavLink>
                 <button onClick={() => navigate('/')} className="header__button">Catalog</button>
             </header>
             <section className="auth__section">
-                <h1 className="auth__title">Registration</h1>
+                <h1 className="auth__title">Регистрация</h1>
                 < Auth isRegForm={true}
                     auth={auth} />
             </section>

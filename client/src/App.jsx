@@ -22,6 +22,7 @@ export function App() {
   const [deviceBrand, setDeviceBrand] = useState([]);
   const [filter, setFilter] = useState()
   const [devices, setDevice] = useState();
+  const [userAvatar, setUserAvatar] = useState();
   const isLogin = location.pathname === '/login';
   const [currentUser, setCurrentUser] = useState({
     isLoggedIn: localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) ? true : false,
@@ -74,7 +75,7 @@ export function App() {
             setCurrentUser(prev => ({ ...prev, isLoggedIn: true }))
             navigate('/', { replace: true })
           })
-          .catch(e => console.log(e))
+          .catch(e => alert(e))
       } else {
         userApi.singup({ email, password, name })
       }
@@ -95,8 +96,8 @@ export function App() {
           email: userInfo.email,
           role: userInfo.role,
           isLoggedIn: true,
+          id: userInfo.id
         }));
-
       } catch (error) {
         localStorage.clear();
         setCurrentUser(prev => ({
@@ -153,6 +154,31 @@ export function App() {
     }
   }
 
+  const handleAddAvatar = async (data) => {
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+    try {
+      let avatar = await userApi.addAvatar(data, token);
+      setUserAvatar(
+        avatar
+      )
+    } catch (error) {
+      console.log(error.response?.data.message)
+    }
+  }
+
+  const handleGetAvatar = async () => {
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+    try {
+      let avatar = await userApi.getAvatar(token);
+      avatar && setCurrentUser((prev) => ({
+        ...prev,
+        avatar: avatar.img
+      }))
+    } catch (error) {
+      console.log(error.response?.data.message)
+    }
+  }
+
   const handleAddRating = async ({ rating, id }) => {
     const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
     const data = {
@@ -194,11 +220,11 @@ export function App() {
               <Routes>
                 <Route
                   path='/'
-                  element={<Shop setCurrentUser={setCurrentUser} logout={logout} setFilter={setFilter} renderComponent={renderComponent}/>}
+                  element={<Shop setCurrentUser={setCurrentUser} logout={logout} setFilter={setFilter} renderComponent={renderComponent} />}
                 />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/basket" element={<Basket />} />
-                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/profile" element={<Profile handleGetAvatar={handleGetAvatar} logout={logout} handleAddAvatar={handleAddAvatar} />} />
                   <Route
                     path='/admin'
                     element={

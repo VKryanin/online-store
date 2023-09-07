@@ -6,20 +6,16 @@ const { log } = require('console');
 
 class DeviceController {
     async create(req, res, next) {
-        console.log(req.body);
         try {
             const { name, price, brandId, typeId, info } = req.body;
-            console.log(info);
             const { img } = req.files;
-            console.log(img);
             let fileName = uuid.v4() + '.jpg';
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
             const device = await Device.create({ name, price, brandId, typeId, img: fileName })
             if (info) {
-                console.log(info, 'info');
                 const Info = JSON.parse(info)
                     Info.forEach(i =>
-                        {console.log(device.id)
+                        {
                         DeviceInfo.create({
                             title: i.title,
                             description: i.description,
@@ -44,13 +40,13 @@ class DeviceController {
 
         }
         if (brandId && !typeId) {
-            devices = await Device.findAndCountAll({ where: { brandId }, limit, offset })
+            devices = await Device.findAndCountAll({ where: { brandId }, limit, offset, order: [["id", 'ASC']] })
         }
         if (!brandId && typeId) {
-            devices = await Device.findAndCountAll({ where: { typeId }, limit, offset })
+            devices = await Device.findAndCountAll({ where: { typeId }, limit, offset, order: [["id", 'ASC']] })
         }
         if (brandId && typeId) {
-            devices = await Device.findAndCountAll({ where: { typeId, brandId }, limit, offset })
+            devices = await Device.findAndCountAll({ where: { typeId, brandId }, limit, offset, order: [["id", 'ASC']] })
         }
         return res.json(devices)
     }

@@ -44,7 +44,6 @@ export const PopupDevice = ({ setFormHidden, setPopupList, handleAddDevice }) =>
         e.preventDefault();
         // console.log({ 'name': name, 'price': newPrice, 'img': image, 'brandId': brandId, 'typeId': typeId, 'info': info }, 'PopupDevice');
         handleAddDevice({ 'name': name, 'price': newPrice, 'img': image, 'brandId': brandId, 'typeId': typeId, 'info': info });
-        console.log(123);
         HideForm()
     }
 

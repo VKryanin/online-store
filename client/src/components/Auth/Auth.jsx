@@ -18,7 +18,7 @@ export const Auth = ({ isRegForm, auth }) => {
                 noValidate>
                 {isRegForm && (
                     < Label
-                        title="Your name"
+                        title="имя"
                         name='name'
                         minLength={2}
                         maxLength={30}
@@ -44,7 +44,7 @@ export const Auth = ({ isRegForm, auth }) => {
                             })
                         )} />
                 < Label
-                    title='Password'
+                    title='пароль'
                     name='password'
                     minLength={6}
                     value={userData.password || ''}
@@ -58,13 +58,13 @@ export const Auth = ({ isRegForm, auth }) => {
                 <div className="auth__wrapper">
                     {isRegForm
                         ? (<p className="auth__subtitle">
-                            <span className="auth__span">Already registered?</span>
-                            <NavLink to='/login' className='auth__link'> Login </NavLink>
+                            <span className="auth__span">Уже зарегистрированы?</span>
+                            <NavLink to='/login' className='auth__link'>Авторизация</NavLink>
                         </p>)
                         : (<p className="auth__subtitle">
-                            <span className="auth__span">Don't have an account?</span>
+                            <span className="auth__span">Нет аккаунта?</span>
                             <NavLink to='/registration' className='auth__link' >
-                                Registration
+                                Регистрация
                             </NavLink>
                         </p>
                         )}

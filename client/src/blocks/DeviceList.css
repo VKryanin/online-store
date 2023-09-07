@@ -31,7 +31,7 @@
 }
 
 .deviceList__item:hover {
-    scale: 1.1;
+    scale: 1.05;
     border: 1px solid #0d6efd;
 }
 

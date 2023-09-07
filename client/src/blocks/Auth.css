@@ -9,12 +9,14 @@
 
 .auth__header {
     width: 100%;
+    max-width: 1280px;
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
     padding: 20px 60px;
-    background-color: #000;
+    background-color: #fff;
     color: #fff;
+    border: 1px solid #C4C4C4;
 }
 
 .auth__section {
@@ -56,13 +58,13 @@
 
 .auth__link {
     margin-left: 4px;
-    color: #1D46D4;
+    color: #0d6efd;
     text-decoration: none;
     transition: all .3s linear;
 }
 
 .auth__link:hover {
-    border-bottom: 1px solid #1D46D4;
+    border-bottom: 1px solid #0d6efd;
 }
 
 .auth__button {
@@ -73,5 +75,6 @@
 }
 
 .auth__button:hover {
-    scale: 1.2;
+    background-color: #0d6efd;
+    color: #fff;
 }

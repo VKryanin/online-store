@@ -2,7 +2,7 @@ import { LOCAL_STORAGE_TOKEN_KEY } from "../utils/constants";
 
 class UserApi {
     constructor() {
-        this._link = 'http://localhost:7000/api/user'
+        this._link = 'http://localhost:7000/api'
     }
 
     _checkResponse(res) {
@@ -15,7 +15,7 @@ class UserApi {
     }
 
     singup({ email, password, name }) {
-        return fetch(`${this._link}/registration`, {
+        return fetch(`${this._link}/user/registration`, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -25,7 +25,7 @@ class UserApi {
     }
 
     singin({ email, password }) {
-        return fetch(`${this._link}/login`, {
+        return fetch(`${this._link}/user/login`, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -37,13 +37,39 @@ class UserApi {
     }
 
     getUserInfo(token) {
-        return fetch(`${this._link}/userinfo`, {
+        return fetch(`${this._link}/user/userinfo`, {
             headers: {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${token}`,
                 Accept: '/',
             }
         }).then((res) => this._checkResponse(res));
+    }
+
+    addAvatar(data, token) {
+        const formData = new FormData();
+        formData.append('userId', data.userId);
+        formData.append('img', data.img);
+        return fetch(`${this._link}/avatar`, {
+            headers: {
+                authorization: `Bearer ${token}`
+            },
+            method: 'POST',
+            body: formData
+        }).then((res) => this._checkResponse(res))
+    }
+
+    getAvatar(token) {
+        return fetch(`${this._link}/avatar`, {
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`
+            },
+        })
+            .then((res) => this._checkResponse(res))
+            .catch((error) => {
+                console.error(error);
+            })
     }
 }
 

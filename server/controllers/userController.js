@@ -1,5 +1,5 @@
 const ApiError = require('../error/ApiError');
-const { User, Basket } = require('../models/models')
+const { User, Basket, Avatar } = require('../models/models')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -52,9 +52,10 @@ class UserController {
             const token = req.headers.authorization.split(' ')[1]
             const { id } = jwt.decode(token, process.env.SECRET_KEY)
             const user = await User.findOne({ where: { id: id } });
+            
             if (!user) {
                 return res.status(404).json({ error: 'User not found' });
-            }
+            } 
             return res.json(user);
         } catch (error) {
             next(error);

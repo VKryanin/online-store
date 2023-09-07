@@ -10,16 +10,17 @@ export const Login = ({ auth }) => {
         <div className="auth">
             <header className="auth__header">
                 <NavLink
-                    className='header__link'
-                    to={'/'}>SoqaShop</NavLink>
+                    className='header__logo'
+                    to={'/'}>SoqaShop
+                </NavLink>
                 <button
                     onClick={
                         () => navigate('/')
                     }
-                    className="header__button">Catalog</button>
+                    className="header__button">Каталог</button>
             </header>
             <section className="auth__section">
-                <h1 className="auth__title">Login</h1>
+                <h1 className="auth__title">Авторизация</h1>
                 < Auth
                     isRegForm={false}
                     auth={auth} />

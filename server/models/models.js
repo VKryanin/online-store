@@ -20,6 +20,17 @@ const User = sequelize.define('user', {
     },
     name: {
         type: DataTypes.STRING,
+    },
+})
+
+const Avatar = sequelize.define('avatar', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    img: {
+        type: DataTypes.STRING, allowNull: false
     }
 })
 
@@ -125,6 +136,9 @@ const TypeBrand = sequelize.define('type_brand', {
 User.hasOne(Basket)
 Basket.belongsTo(User)
 
+User.hasOne(Avatar)
+Avatar.belongsTo(User)
+
 User.hasMany(Rating)
 Rating.belongsTo(User)
 
@@ -151,5 +165,5 @@ Brand.belongsToMany(Type, { through: TypeBrand })
 
 
 module.exports = {
-    User, Basket, BasketDevice, Device, Type, Brand, Rating, TypeBrand, DeviceInfo
+    User, Avatar ,Basket, BasketDevice, Device, Type, Brand, Rating, TypeBrand, DeviceInfo
 }
