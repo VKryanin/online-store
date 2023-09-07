@@ -34,7 +34,6 @@ export const DeviceList = ({ devices, deviceBrands, deviceTypes }) => {
                                     src={rate}
                                     alt="icon" />
                                 {device.rating}
-                                {console.log(device.rating, device.id, 'rating')}
                             </p>
                         </div>
                         <h5 className="deviceList__model"

@@ -12,6 +12,7 @@
 @import url(./blocks/LabelItem.css);
 @import url(./blocks/SelectedItem.css);
 @import url(./blocks/DevicePage.css);
+@import url(./blocks/Profile.css);
 
 .root {
     background-color: #f3f3f3;

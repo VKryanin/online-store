@@ -22,7 +22,6 @@ export function App() {
   const [deviceBrand, setDeviceBrand] = useState([]);
   const [filter, setFilter] = useState()
   const [devices, setDevice] = useState();
-  const [userAvatar, setUserAvatar] = useState();
   const isLogin = location.pathname === '/login';
   const [currentUser, setCurrentUser] = useState({
     isLoggedIn: localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) ? true : false,
@@ -50,6 +49,8 @@ export function App() {
     deviceType()
     deviceBrands()
     device()
+    checkToken()
+    console.log(currentUser);
   }
 
   useEffect(() => {
@@ -90,14 +91,25 @@ export function App() {
     if (token) {
       try {
         const userInfo = await userApi.getUserInfo(token);
-        setCurrentUser(prev => ({
-          ...prev,
-          name: userInfo.name,
-          email: userInfo.email,
-          role: userInfo.role,
-          isLoggedIn: true,
-          id: userInfo.id
-        }));
+        const avatar = await userApi.getAvatar(token);
+        !!avatar === true
+          ? setCurrentUser(prev => ({
+            ...prev,
+            name: userInfo.name,
+            email: userInfo.email,
+            role: userInfo.role,
+            isLoggedIn: true,
+            id: userInfo.id,
+            avatar: avatar.img
+          }))
+          : setCurrentUser(prev => ({
+            ...prev,
+            name: userInfo.name,
+            email: userInfo.email,
+            role: userInfo.role,
+            isLoggedIn: true,
+            id: userInfo.id,
+          }))
       } catch (error) {
         localStorage.clear();
         setCurrentUser(prev => ({
@@ -158,9 +170,10 @@ export function App() {
     const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
     try {
       let avatar = await userApi.addAvatar(data, token);
-      setUserAvatar(
-        avatar
-      )
+      setCurrentUser((prev) => ({
+        ...prev,
+        avatar: avatar.img
+      }))
     } catch (error) {
       console.log(error.response?.data.message)
     }
@@ -224,7 +237,7 @@ export function App() {
                 />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/basket" element={<Basket />} />
-                  <Route path="/profile" element={<Profile handleGetAvatar={handleGetAvatar} logout={logout} handleAddAvatar={handleAddAvatar} />} />
+                  <Route path="/profile" element={<Profile renderComponent={renderComponent} handleGetAvatar={handleGetAvatar} logout={logout} handleAddAvatar={handleAddAvatar} />} />
                   <Route
                     path='/admin'
                     element={
