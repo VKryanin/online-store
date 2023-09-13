@@ -5,19 +5,21 @@ import pepe from '../../../image/pepe.jpg'
 export const ProfileForm = ({ handleAddAvatar, currentUser }) => {
     const inputRef = useRef(null);
     const buttonRef = useRef(null);
-    const [image, setImage] = useState()
+    const [image, setImage] = useState();
+
     useEffect(() => {
-        buttonRef.current.click()
-        console.log('test');
-    }, image)
+        if (image) {
+            buttonRef.current.click();
+        }
+    }, [image]);
 
     const handleImage = () => {
-        inputRef.current.click()
-    }
+        inputRef.current.click();
+    };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setImage(file)
+        setImage(file);
     };
 
     const handleSubmit = (e) => {
@@ -28,7 +30,8 @@ export const ProfileForm = ({ handleAddAvatar, currentUser }) => {
     return (
         <div className="profile__header">
             <div className='profile__wrapper'>
-                <img className="profile__avatar"
+                <img
+                    className="profile__avatar"
                     src={currentUser.avatar ? `${process.env.REACT_APP_API_URL}/${currentUser.avatar}` : pepe}
                     alt="Аватар пользователя"
                 />
@@ -39,10 +42,7 @@ export const ProfileForm = ({ handleAddAvatar, currentUser }) => {
             <h1 className="profile__title">
                 Привет, <br />{currentUser.name}!
             </h1>
-            <form
-                className="profile__form"
-                onSubmit={handleSubmit}
-            >
+            <form className="profile__form" onSubmit={handleSubmit}>
                 <input
                     className="createItem__input"
                     title="img"
@@ -61,6 +61,5 @@ export const ProfileForm = ({ handleAddAvatar, currentUser }) => {
                 </button>
             </form>
         </div>
-    )
-}
-
+    );
+};

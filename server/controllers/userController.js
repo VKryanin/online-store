@@ -22,7 +22,7 @@ class UserController {
             return next(ApiError.badRequest('Email already exists'))
         }
         const hashPassword = await bcrypt.hash(password, 5);
-        const user = await User.create({ email, role, name ,password: hashPassword });
+        const user = await User.create({ email, role, name, password: hashPassword });
         const basket = await Basket.create({ userId: user.id });
         const token = generateJwt(user.id, user.email, user.name, role)
         return res.json({ token })
@@ -52,13 +52,37 @@ class UserController {
             const token = req.headers.authorization.split(' ')[1]
             const { id } = jwt.decode(token, process.env.SECRET_KEY)
             const user = await User.findOne({ where: { id: id } });
-            
             if (!user) {
                 return res.status(404).json({ error: 'User not found' });
-            } 
+            }
             return res.json(user);
         } catch (error) {
             next(error);
+        }
+    }
+
+    async updateUser(req, res, next) {
+        console.log(req.body);
+        try {
+            const token = req.headers.authorization.split(' ')[1];
+            const { id } = jwt.decode(token, process.env.SECRET_KEY);
+
+            const updatedFields = {};
+            if (req.body.password) {
+                updatedFields.password = req.body.password;
+            }
+            if (req.body.name) {
+                updatedFields.name = req.body.name;
+            }
+            if (req.body.email) {
+                updatedFields.email = req.body.email;
+            }
+
+            const updatedUser = await User.update(updatedFields, { where: { id: id } });
+
+            return res.json(updatedUser);
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
         }
     }
 }

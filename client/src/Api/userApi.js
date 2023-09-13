@@ -25,6 +25,7 @@ class UserApi {
     }
 
     singin({ email, password }) {
+        console.log();
         return fetch(`${this._link}/user/login`, {
             headers: {
                 "Content-Type": "application/json",
@@ -43,6 +44,28 @@ class UserApi {
                 authorization: `Bearer ${token}`,
                 Accept: '/',
             }
+        }).then((res) => this._checkResponse(res));
+    }
+
+    userUpdate({ email, password, name }, token) {
+        const requestBody = {};
+        if (email) {
+            requestBody.email = email;
+        }
+        if (password) {
+            requestBody.password = password;
+        }
+        if (name) {
+            requestBody.name = name;
+        }
+        console.log(requestBody, token, 1);
+        return fetch(`${this._link}/user/update`, {
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`
+            },
+            method: "POST",
+            body: JSON.stringify(requestBody)
         }).then((res) => this._checkResponse(res));
     }
 

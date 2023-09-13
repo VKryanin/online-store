@@ -4,7 +4,7 @@ import { Header } from "../Header/Header";
 import { ProfileEdit } from "./ProfileEdit/ProfileEdit";
 import { ProfileForm } from "./ProfileForm/ProfileForm";
 
-export const Profile = ({ handleGetAvatar, logout, handleAddAvatar, renderComponent }) => {
+export const Profile = ({updateUser, handleGetAvatar, logout, handleAddAvatar, renderComponent }) => {
     const currentUser = useContext(CurrentUserContext);
 
     useEffect(() => {
@@ -16,8 +16,8 @@ export const Profile = ({ handleGetAvatar, logout, handleAddAvatar, renderCompon
             <Header loggedIn={currentUser.loggedIn} logout={logout} />
             <main className="profile">
                 <div className="profile__content">
-                    < ProfileForm handleAddAvatar={handleAddAvatar} currentUser={currentUser} />
-                    <ProfileEdit />
+                    <ProfileForm handleAddAvatar={handleAddAvatar} currentUser={currentUser} />
+                    <ProfileEdit updateUser={updateUser}/>
                 </div>
                 <div className="profile__basket">test2</div>
             </main>

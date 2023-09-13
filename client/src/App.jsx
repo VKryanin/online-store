@@ -50,7 +50,6 @@ export function App() {
     deviceBrands()
     device()
     checkToken()
-    console.log(currentUser);
   }
 
   useEffect(() => {
@@ -118,6 +117,16 @@ export function App() {
         }));
       }
     }
+  }
+
+
+  const updateUser = async ({ email, password, name }) => {
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+    await userApi.userUpdate({ email, password, name }, token)
+      .then((user) => {
+        setCurrentUser(prev => ({ ...prev, ...user, isLoggedIn: true }))
+      })
+      .catch(e => alert(e))
   }
 
   const logout = () => {
@@ -237,7 +246,7 @@ export function App() {
                 />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/basket" element={<Basket />} />
-                  <Route path="/profile" element={<Profile renderComponent={renderComponent} handleGetAvatar={handleGetAvatar} logout={logout} handleAddAvatar={handleAddAvatar} />} />
+                  <Route path="/profile" element={<Profile updateUser={updateUser} renderComponent={renderComponent} handleGetAvatar={handleGetAvatar} logout={logout} handleAddAvatar={handleAddAvatar} />} />
                   <Route
                     path='/admin'
                     element={
