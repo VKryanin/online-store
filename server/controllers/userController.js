@@ -62,7 +62,6 @@ class UserController {
     }
 
     async updateUser(req, res, next) {
-        console.log(req.body);
         try {
             const token = req.headers.authorization.split(' ')[1];
             const { id } = jwt.decode(token, process.env.SECRET_KEY);
