@@ -1,0 +1,40 @@
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 24px;
+
+    &Logo {
+        width: 61px;
+    }
+
+    &Logo a {
+        height: 100%;
+    }
+
+    &Rights {
+        color: var(--dark-sea);
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    &Rights a {
+        color: var(--violet);
+    }
+
+    &Socials {
+        display: flex;
+        gap: 15px;
+    }
+
+    &Socials svg {
+        width: 24px;
+        height: 24px;
+        fill: var(--dark-sea);
+    }
+
+    &Socials svg:hover {
+        fill: var(--violet);
+    }
+}

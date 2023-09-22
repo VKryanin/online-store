@@ -1,0 +1,45 @@
+.aside {
+    width: 304px;
+    padding: 24px;
+    height: 423px;
+    display: flex;
+    flex-direction: column;
+
+    &Title {
+        font-weight: 600;
+        line-height: 20px;
+    }
+
+    &Menu {
+        margin-top: 32px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+    }
+
+    &FooterLink,
+    &Link {
+        color: var(--dark-sea);
+        font-size: 14px;
+        line-height: 17px;
+        text-transform: capitalize;
+        transition: color .3s linear;
+
+        &:hover {
+            color: var(--white);
+        }
+    }
+
+    // &FooterLink:hover,
+    // &Link {}
+
+    &Active {
+        color: var(--violet);
+    }
+
+    &Footer {
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+    }
+}

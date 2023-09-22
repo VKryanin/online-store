@@ -1,0 +1,10 @@
+.app {
+    width: 1274px;
+    margin: 0 auto;
+
+    &Container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+}
