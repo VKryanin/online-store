@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 
 export const Sidebar = () => {
     const { list } = useSelector(({ categories }) => categories)
-    console.log(list);
 
     return (
         <aside className={styles.aside}>

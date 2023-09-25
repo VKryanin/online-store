@@ -1,0 +1,51 @@
+.poster {
+    position: relative;
+    flex-grow: 1;
+
+    &Title {
+        font-weight: 900;
+        font-size: 119px;
+        line-height: 145px;
+        text-transform: uppercase;
+        color: var(--bg);
+        text-align: center;
+    }
+
+    &Product {
+        position: relative;
+        padding-left: 42px;
+        display: flex;
+        align-items: stretch;
+        margin-top: 9px;
+    }
+
+    &Subtitle {
+        line-height: 20px;
+        text-transform: uppercase;
+        color: var(--sea);
+    }
+
+    &Head {
+        font-weight: 700;
+        font-size: 42px;
+        line-height: 51px;
+        text-transform: uppercase;
+        color: var(--light);
+        max-width: 500px;
+        margin: 10px 0 24px 0;
+        text-align: start;
+    }
+
+    &Image {
+        position: relative;
+        flex-grow: 1;
+        height: 250px;
+    }
+
+    &Image img {
+        position: absolute;
+        bottom: -15%;
+        right: 10%;
+        max-width: unset;
+    }
+}

@@ -1,7 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
+import { Poster } from "../Poster/Poster";
+import { Products } from '../Products/Products';
 
 export const Home = () => {
+    const { list } = useSelector(({ products }) => products)
     return (
-        <div>Home</div>
+        <>
+            <Poster />
+            <Products products={list} amount={5} title='Trending' />
+        </>
     )
 }
