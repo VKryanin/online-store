@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { ROUTES } from "../../utils/routes";
-import LOGO from '../../images/LOGO.svg'
+import LOGO from '../../images/LOGO.svg';
+import AVATAR from '../../images/avatar.jpg'
 import styles from './Header.module.scss';
+import { useDispatch, useSelector } from "react-redux";
+import { toggleForm } from "../../features/user/userSlice";
 
 export const Header = () => {
+    const dispatch = useDispatch();
+    const { currentUser } = useSelector(({ user }) => user)
+    const [values, setValues] = useState({ name: 'Guest', avatar: AVATAR })
+
+    useEffect(() => {
+        if (!currentUser) return;
+        setValues(currentUser);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentUser])
+
+
+    const handleClick = () => {
+        if (!currentUser) dispatch(toggleForm(true));
+    }
+
     return (
         <header className={styles.header}>
             <div className={styles.headerLogo}>
@@ -14,9 +32,12 @@ export const Header = () => {
                 </Link>
             </div>
             <div className={styles.headerInfo}>
-                <div className={styles.headerUser}>
-                    <div className={styles.headerUserAvatar} />
-                    <p className={styles.headerUserName}>Guest</p>
+                <div className={styles.headerUser} onClick={handleClick}>
+                    <div
+                        className={styles.headerUserAvatar}
+                        style={{ backgroundImage: `url(${values.avatar})` }}
+                    />
+                    <p className={styles.headerUserName}>{values.name}</p>
                 </div>
                 <form className={styles.headerForm}>
                     <div className={styles.headerIconWrapper}>
