@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { ROUTES } from "../../utils/routes";
 import LOGO from '../../images/LOGO.svg';
@@ -10,6 +10,7 @@ import { toggleForm } from "../../features/user/userSlice";
 
 export const Header = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const { currentUser } = useSelector(({ user }) => user)
     const [values, setValues] = useState({ name: 'Guest', avatar: AVATAR })
 
@@ -22,6 +23,7 @@ export const Header = () => {
 
     const handleClick = () => {
         if (!currentUser) dispatch(toggleForm(true));
+        else navigate(ROUTES.PROFILE)
     }
 
     return (
