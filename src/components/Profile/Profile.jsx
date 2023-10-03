@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import styles from './Profile.module.scss';
 import { useDispatch, useSelector } from "react-redux";
-import { createUser, updateUser } from "../../features/user/userSlice";
+import { updateUser } from "../../features/user/userSlice";
 
 export const Profile = () => {
     const dispatch = useDispatch();

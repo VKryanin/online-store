@@ -7,10 +7,13 @@ import AVATAR from '../../images/avatar.jpg'
 import styles from './Header.module.scss';
 import { useDispatch, useSelector } from "react-redux";
 import { toggleForm } from "../../features/user/userSlice";
+import { useGetProductsQuery } from "../../features/api/apiSlice";
 
 export const Header = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const [searchValue, setSearchValue] = useState('')
     const { currentUser } = useSelector(({ user }) => user)
     const [values, setValues] = useState({ name: 'Guest', avatar: AVATAR })
 
@@ -20,10 +23,15 @@ export const Header = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser])
 
+    const { data, isLoading } = useGetProductsQuery({ title: searchValue });
 
     const handleClick = () => {
         if (!currentUser) dispatch(toggleForm(true));
         else navigate(ROUTES.PROFILE)
+    }
+
+    const handleSearch = ({ target: { value } }) => {
+        setSearchValue(value)
     }
 
     return (
@@ -53,10 +61,34 @@ export const Header = () => {
                             name="search"
                             placeholder="Search for anything ..."
                             autoComplete="off"
-                            onChange={() => { }}
-                            value='' />
+                            onChange={handleSearch}
+                            value={searchValue} />
                     </div>
-                    {false && <div className={styles.headerPopup}></div>}
+                    {
+                        searchValue && <div className={styles.headerPopup}>
+                            {
+                                isLoading
+                                    ? 'Loading...'
+                                    : !data.length ? 'No results'
+                                        : (data.map(({ title, images, id }) => {
+                                            return (
+                                                <Link
+                                                    className={styles.headerItem}
+                                                    to={`/products/${id}`}
+                                                    key={id}
+                                                    onClick={() => setSearchValue('')}
+                                                >
+                                                    <div
+                                                        className={styles.headerImage}
+                                                        style={{ backgroundImage: `url(${images[0]})` }}
+                                                    />
+                                                    <div className={styles.headerTitle}>{title}</div>
+                                                </Link>)
+                                        })
+                                        )
+                            }
+                        </div>
+                    }
                 </form>
                 <div className={styles.headerAccount}>
                     <Link to={ROUTES.HOME} className={styles.headerFavourites}>
