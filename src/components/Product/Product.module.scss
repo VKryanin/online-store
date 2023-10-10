@@ -106,13 +106,25 @@
         column-gap: 10px;
     }
 
-    &Favourite {
+    &AddFavourite {
         background: var(--dark-sea);
         border-radius: 6px;
+        &:hover {
+            background-color: var(--violet-dark);
+        }
     }
 
     &:hover {
         background: var(--dark);
+    }
+
+    &RemoveFavourite {
+        background: var(--violet-dark);
+        border-radius: 6px;
+
+        &:hover {
+            background-color: var(--dark-sea);
+        }
     }
 
     &Bottom {

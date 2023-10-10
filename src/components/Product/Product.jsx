@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ROUTES } from '../../utils/routes'
-import { addItemToCart } from "../../features/user/userSlice";
+import { addItemToCart, addItemtoFavourite, removeItemFromFavourite } from "../../features/user/userSlice";
 
 import styles from './Product.module.scss'
 
@@ -11,11 +11,13 @@ import styles from './Product.module.scss'
 const SIZES = [4, 4.5, 5];
 
 export const Product = (item) => {
-    const { title, images, price, description } = item
-    const dispatch = useDispatch()
-
+    const { favourite } = useSelector(({ user }) => user);
+    const { id, title, images, price, description } = item
     const [currentImage, setCurrentImage] = useState();
     const [currentSize, setCurrentSize] = useState();
+    const dispatch = useDispatch();
+    const favouriteList = favourite.map(({ id }) => id)
+    const isFavourite = favouriteList.includes(item.id)
 
     useEffect(() => {
         if (!images.length) return;
@@ -24,6 +26,14 @@ export const Product = (item) => {
 
     const addToCart = () => {
         dispatch(addItemToCart(item))
+    }
+
+    const addToFav = () => {
+        dispatch(addItemtoFavourite(item))
+    }
+
+    const removeToFav = () => {
+        dispatch(removeItemFromFavourite(id))
     }
     return (
         <section className={styles.product}>
@@ -72,8 +82,26 @@ export const Product = (item) => {
                     {description}
                 </p>
                 <div className={styles.productActions}>
-                    <button onClick={addToCart} className={styles.productAdd} disabled={!currentSize}>Add to cart</button>
-                    <button className={styles.productFavourite}>Add to favourites</button>
+                    <button
+                        onClick={addToCart}
+                        className={styles.productAdd}
+                        disabled={!currentSize}
+                    >
+                        Add to cart
+                    </button>
+                    {!isFavourite
+                        ? (<button
+                            className={styles.productAddFavourite}
+                            onClick={addToFav}
+                        >
+                            Add to favourites
+                        </button>)
+                        : <button
+                            className={styles.productRemoveFavourite}
+                            onClick={removeToFav}
+                        >
+                            Favourites
+                        </button>}
                 </div>
                 <div className={styles.productBottom}>
                     <p className={styles.productPurchase}>19 people purchased</p>
@@ -82,6 +110,6 @@ export const Product = (item) => {
                     </Link>
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
