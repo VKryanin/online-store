@@ -20,7 +20,6 @@ export const Categories = ({ title, products = [], amount }) => {
                             </h3>
                         </Link>
                     </li>
-
                 ))}
             </ul>
         </section>

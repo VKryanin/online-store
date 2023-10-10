@@ -14,7 +14,7 @@ export const Header = () => {
     const navigate = useNavigate();
 
     const [searchValue, setSearchValue] = useState('')
-    const { currentUser } = useSelector(({ user }) => user)
+    const { currentUser, cart } = useSelector(({ user }) => user)
     const [values, setValues] = useState({ name: 'Guest', avatar: AVATAR })
 
     useEffect(() => {
@@ -100,7 +100,10 @@ export const Header = () => {
                         <svg className={styles.headerIconCart}>
                             <use xlinkHref={`${process.env.PUBLIC_URL}/icons.svg#bag`} />
                         </svg>
-                        <span className={styles.headerCount}>2</span>
+                        {!!cart.length && (
+                            <span className={styles.headerCount}>{cart.length}</span>
+                        )}
+
                     </Link>
                 </div>
             </div>

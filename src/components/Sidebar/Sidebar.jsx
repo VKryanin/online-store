@@ -12,7 +12,7 @@ export const Sidebar = () => {
             <h3 className={styles.asideTitle}>CATEGORIES</h3>
             <nav>
                 <ul className={styles.asideMenu}>
-                    {list.map(({ id, name }) => (
+                    {list.slice(0, 10).map(({ id, name }) => (
                         <li key={id}>
                             <NavLink
                                 className={({ isActive }) => `${styles.asideLink} ${isActive ? styles.asideActive : ''}`}
@@ -21,7 +21,6 @@ export const Sidebar = () => {
                             </NavLink>
                         </li>
                     ))}
-
                 </ul>
             </nav>
             <ul className={styles.asideFooter}>
