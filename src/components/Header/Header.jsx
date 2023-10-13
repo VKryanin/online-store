@@ -6,7 +6,7 @@ import LOGO from '../../images/LOGO.svg';
 import AVATAR from '../../images/avatar.jpg'
 import styles from './Header.module.scss';
 import { useDispatch, useSelector } from "react-redux";
-import { toggleForm } from "../../features/user/userSlice";
+import { toggleForm, logout, checkAuth } from "../../features/user/userSlice";
 import { useGetProductsQuery } from "../../features/api/apiSlice";
 
 export const Header = () => {
@@ -23,8 +23,6 @@ export const Header = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser])
 
-    console.log(currentUser, 'currentUser');
-
     const { data, isLoading } = useGetProductsQuery({ title: searchValue });
 
     const handleClick = () => {
@@ -34,6 +32,13 @@ export const Header = () => {
 
     const handleSearch = ({ target: { value } }) => {
         setSearchValue(value)
+    }
+
+    const handleLogout = () => {
+        dispatch(logout())
+        localStorage.clear()
+        dispatch(checkAuth())
+        setValues({ name: 'Guest', avatar: AVATAR })
     }
 
     return (
@@ -109,6 +114,16 @@ export const Header = () => {
                             <span className={styles.headerCount}>{cart.length}</span>
                         )}
                     </Link>
+                    {currentUser && (
+                        <Link
+                            to={ROUTES.HOME}
+                            className={styles.headerExit}
+                            onClick={() => handleLogout()}
+                        >
+                            <svg className={styles.headerIconCart}>
+                                <use xlinkHref={`${process.env.PUBLIC_URL}/icons.svg#exit`} />
+                            </svg>
+                        </Link>)}
                 </div>
             </div>
         </header>

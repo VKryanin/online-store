@@ -44,7 +44,6 @@ export const checkAuth = createAsyncThunk(
             console.log(err);
             return thunkApi.rejectWithValue(err)
         }
-
     }
 )
 
@@ -77,6 +76,12 @@ const userSlice = createSlice({
         showForm: false
     },
     reducers: {
+        logout: (state) => {
+            state.currentUser = null;
+            state.favourite = [];
+            state.cart = [];
+            state.jwt = null;
+        },
         addItemToCart: (state, { payload }) => {
             let newCart = [...state.cart];
             const found = state.cart.find(({ id }) => id === payload.id);
@@ -127,5 +132,5 @@ const userSlice = createSlice({
     }
 });
 
-export const { addItemToCart, addItemtoFavourite, removeItemFromFavourite, removeItemFromCart, toggleForm, toggleFormType } = userSlice.actions;
+export const { addItemToCart, addItemtoFavourite, removeItemFromFavourite, removeItemFromCart, toggleForm, toggleFormType, logout } = userSlice.actions;
 export default userSlice.reducer;

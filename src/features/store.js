@@ -10,6 +10,7 @@ export const store = configureStore({
         categories: categoriesSlice,
         products: productsSlice,
         user: userSlice,
+        jwt: () => localStorage.getItem('jwt'),
         [apiSlice.reducerPath]: apiSlice.reducer
     },
     middleware: (getMiddleware) => getMiddleware().concat(apiSlice.middleware),

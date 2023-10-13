@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from './App.module.scss'
@@ -15,25 +15,18 @@ import { checkAuth } from "../../features/user/userSlice";
 
 
 export const App = () => {
-    const { isLoading } = useSelector(({ user }) => user);
+    const jwt = useSelector((state) => state.jwt);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(checkAuth())
         dispatch(getCategories())
         dispatch(getProducts())
     }, [dispatch])
 
-    // useEffect(() => {
-    //     dispatch(checkAuth())
-    // }, [isLoading])
-
-    // console.log(isLoading, 'isLoading');
-
-    // useEffect(() => {
-    // dispatch(checkAuth())
-
-    // }, [isLoading])
-
+    useEffect(() => {
+        dispatch(checkAuth())
+        console.log(jwt);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [jwt])
 
     return (
         <div className={styles.app}>

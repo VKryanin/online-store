@@ -20,7 +20,7 @@ export const UserLoginForm = ({ toggleCurrentFormType, closeForm }) => {
         const isEmpty = Object.values(values).some(val => !val);
         if (isEmpty) return;
         dispatch(loginUser(values));
-        // dispatch(checkAuth())
+        dispatch(checkAuth())
         closeForm();
     }
     return (
