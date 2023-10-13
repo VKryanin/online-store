@@ -27,7 +27,7 @@ export const App = () => {
     //     dispatch(checkAuth())
     // }, [isLoading])
 
-    console.log(isLoading, 'isLoading');
+    // console.log(isLoading, 'isLoading');
 
     // useEffect(() => {
     // dispatch(checkAuth())
