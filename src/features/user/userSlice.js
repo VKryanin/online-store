@@ -20,9 +20,23 @@ export const loginUser = createAsyncThunk(
     async (payload, thunkApi) => {
         try {
             const res = await axios.post(`${BASE_URL}/auth/login`, payload);
+            localStorage.setItem('jwt', res.data.access_token)
+        } catch (err) {
+            console.log(err);
+            return thunkApi.rejectWithValue(err)
+        }
+    }
+);
+
+export const checkAuth = createAsyncThunk(
+    'users/checkAuth',
+    async (_, thunkApi) => {
+        try {
+            const jwt = localStorage.getItem('jwt');
+            if (!jwt) return;
             const login = await axios(`${BASE_URL}/auth/profile`, {
                 headers: {
-                    'Authorization': `Bearer ${res.data.access_token}`
+                    'Authorization': `Bearer ${jwt}`
                 }
             })
             return login.data
@@ -30,8 +44,9 @@ export const loginUser = createAsyncThunk(
             console.log(err);
             return thunkApi.rejectWithValue(err)
         }
+
     }
-);
+)
 
 export const updateUser = createAsyncThunk(
     'users/updateUser',
@@ -48,6 +63,7 @@ export const updateUser = createAsyncThunk(
 
 const addCurrentUser = (state, { payload }) => {
     state.currentUser = payload;
+    state.isLoading = false;
 };
 
 const userSlice = createSlice({
@@ -100,7 +116,13 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(createUser.fulfilled, addCurrentUser);
-        builder.addCase(loginUser.fulfilled, addCurrentUser);
+
+        builder.addCase(checkAuth.pending, (state) => {
+            state.isLoading = true
+        }
+        )
+        builder.addCase(checkAuth.fulfilled, addCurrentUser);
+        // builder.addCase(loginUser.fulfilled, addCurrentUser);
         builder.addCase(updateUser.fulfilled, addCurrentUser);
     }
 });

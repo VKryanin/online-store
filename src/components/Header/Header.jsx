@@ -14,7 +14,7 @@ export const Header = () => {
     const navigate = useNavigate();
 
     const [searchValue, setSearchValue] = useState('')
-    const { currentUser, cart } = useSelector(({ user }) => user)
+    const { currentUser, cart, favourite } = useSelector(({ user }) => user)
     const [values, setValues] = useState({ name: 'Guest', avatar: AVATAR })
 
     useEffect(() => {
@@ -22,6 +22,8 @@ export const Header = () => {
         setValues(currentUser);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser])
+
+    console.log(currentUser, 'currentUser');
 
     const { data, isLoading } = useGetProductsQuery({ title: searchValue });
 
@@ -95,6 +97,9 @@ export const Header = () => {
                         <svg className={styles.headerIconFav}>
                             <use xlinkHref={`${process.env.PUBLIC_URL}/icons.svg#heart`} />
                         </svg>
+                        {!!favourite.length && (
+                            <span className={styles.headerCount}>{favourite.length}</span>
+                        )}
                     </Link>
                     <Link to={ROUTES.CART} className={styles.headerCart}>
                         <svg className={styles.headerIconCart}>
@@ -103,7 +108,6 @@ export const Header = () => {
                         {!!cart.length && (
                             <span className={styles.headerCount}>{cart.length}</span>
                         )}
-
                     </Link>
                 </div>
             </div>

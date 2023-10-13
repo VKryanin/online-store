@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styles from './User.module.scss'
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../features/user/userSlice";
+import { checkAuth, loginUser } from "../../features/user/userSlice";
 
 export const UserLoginForm = ({ toggleCurrentFormType, closeForm }) => {
     const dispatch = useDispatch();
@@ -20,6 +20,7 @@ export const UserLoginForm = ({ toggleCurrentFormType, closeForm }) => {
         const isEmpty = Object.values(values).some(val => !val);
         if (isEmpty) return;
         dispatch(loginUser(values));
+        // dispatch(checkAuth())
         closeForm();
     }
     return (
