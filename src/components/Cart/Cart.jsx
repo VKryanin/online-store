@@ -20,9 +20,8 @@ export const Cart = () => {
             <h2 className={styles.cartTitle}>
                 Your cart
             </h2>
-
             {!cart.length
-                ? (<p className={styles.cartSubtitle}>Here is empty </p>)
+                ? (<p className={styles.cartEmpty}>Here is empty </p>)
                 : (<>
                     <ul className={styles.cartList}>
                         {cart.map((item) => {

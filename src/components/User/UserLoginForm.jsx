@@ -17,6 +17,7 @@ export const UserLoginForm = ({ toggleCurrentFormType, closeForm }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('test');
         const isEmpty = Object.values(values).some(val => !val);
         if (isEmpty) return;
         dispatch(loginUser(values));

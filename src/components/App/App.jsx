@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from './App.module.scss'
@@ -24,7 +24,6 @@ export const App = () => {
 
     useEffect(() => {
         dispatch(checkAuth())
-        console.log(jwt);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [jwt])
 

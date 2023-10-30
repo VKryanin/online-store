@@ -98,7 +98,7 @@ export const Header = () => {
                     }
                 </form>
                 <div className={styles.headerAccount}>
-                    <Link to={ROUTES.HOME} className={styles.headerFavourites}>
+                    <Link to={ROUTES.FAVOURITE} className={currentUser ? styles.headerFavourites : styles.headerFavourites + ' ' + styles.headerFavouritesHidden} >
                         <svg className={styles.headerIconFav}>
                             <use xlinkHref={`${process.env.PUBLIC_URL}/icons.svg#heart`} />
                         </svg>
@@ -114,7 +114,7 @@ export const Header = () => {
                             <span className={styles.headerCount}>{cart.length}</span>
                         )}
                     </Link>
-                    {currentUser && (
+                    {currentUser ? (
                         <Link
                             to={ROUTES.HOME}
                             className={styles.headerExit}
@@ -123,9 +123,20 @@ export const Header = () => {
                             <svg className={styles.headerIconCart}>
                                 <use xlinkHref={`${process.env.PUBLIC_URL}/icons.svg#exit`} />
                             </svg>
-                        </Link>)}
+                        </Link>)
+                        : (
+                            <Link
+                                to={ROUTES.HOME}
+                                className={styles.headerExit}
+                                onClick={() => handleClick()}
+                            >
+                                <svg className={styles.headerIconCart}>
+                                    <use xlinkHref={`${process.env.PUBLIC_URL}/icons.svg#login`} />
+                                </svg>
+                            </Link>
+                        )}
                 </div>
             </div>
-        </header>
+        </header >
     )
 }

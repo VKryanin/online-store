@@ -83,6 +83,13 @@
 
     &Favourites {
         cursor: pointer;
+        opacity: 1;
+        transition: all .3s linear;
+    }
+
+    &FavouritesHidden {
+        opacity: 0;
+        visibility: hidden;
     }
 
     &Account svg {
@@ -107,7 +114,8 @@
         }
     }
 
-    &Cart, &Favourites {
+    &Cart,
+    &Favourites {
         position: relative;
     }
 
